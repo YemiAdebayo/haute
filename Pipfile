@@ -4,9 +4,13 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+psycopg2 = "*"
+autopep8 = "*"
 
 [packages]
 django = "==3.0.5"
+python-decouple = "==3.1"
+django-crispy-forms = "*"
 
 [requires]
 python_version = "3.8"
