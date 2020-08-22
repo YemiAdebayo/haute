@@ -1,0 +1,9 @@
+.first-section {
+    min-height: 100vh;
+    /* padding: 60px 0; */
+    background-image: url("../img/worm-s-eye-view-of-buildings-1632788.jpg");
+}
+
+input {
+    box-shadow: none !important;
+}

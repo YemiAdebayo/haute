@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+
+    <!-- Primary Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- <link rel="apple-touch-icon" href="{% static 'img/idea.ico' %}"> -->
+    <!-- <link rel="shortcut icon" href="{% static 'img/idea.ico' %}" /> -->
+    <!-- <link rel="icon" sizes="192x192" href="{% static 'img/idea.ico' %}"> -->
+    {% block extrametatags %}
+    {% endblock %}
+    <!-- Primary Meta Tags end here -->
+
+    <!-- Pre-connected servers start here -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- <link href="https://fonts.googleapis.com/css?family=Montez|Playfair+Display+SC:900|Roboto:300,400,500&display=swap"
+        rel="stylesheet"> -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous">
+    <link rel="preconnect" href="https://code.jquery.com" crossorigin="anonymous">
+    <!-- <link rel="preconnect" href="https://kit-free.fontawesome.com" crossorigin="anonymous"> -->
+    <!-- Pre-connected servers end here -->
+
+    <!-- bootstrap css starts here -->
+    <link rel="preload" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"
+        as="style">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- bootstrap css ends here -->
+
+    <!-- bootstrap javascript and dependencies start here -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"
+        as="script">
+    <link rel="preload" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"
+        as="script">
+    <!-- bootstrap javascript and dependencies start here -->
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block extrahead %}
+    {% endblock %}
+</head>
+
+<body class="p-0 m-0">
+    <nav class="navbar navbar-expand-lg navbar-light col-12 row m-0 p-1">
+        <div class="col-3 p-0">
+            <div class="p-0 m-1 text-left">
+                <a class="navbar-brand m-0 p-0 text-light-brown" href="#">HAUTE</a>
+            </div>
+        </div>
+        <div class="col-9 p-0">
+            <div class="p-0 m-1 d-flex justify-content-end align-items-center align-items-end row ">
+                <div class="p-0 m-0 mx-3 search-box-wrapper position-relative d-none d-md-block">
+                    <form class="input-group">
+                        <input type="text" class="form-control border-right-0" placeholder="Search items here"
+                            aria-label="Search items here" aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary px-1 border-left-0" type="submit"
+                                id="button-addon2">
+                                <span class="px-2 text-light-brown">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <a class="p-0 m-0 position-relative" href=" #">
+                    <span class="px-0 text-light-brown">
+                        <i class="fas fa-shopping-cart"></i>
+                    </span>
+                    <span class="cart-items-quantity d-flex justify-content-center align-items-center position-absolute
+                     text-deep-blue">
+                        <p class="p-0 m-0 text-white" style="font-size: .75em;">6</p>
+                    </span>
+                </a>
+                <button class="p-0 m-0 mx-3">
+                    <span class="px-2 text-light-brown">
+                        <i class="fas fa-user"></i>
+                    </span>
+                </button>
+                <button class="p-1 rounded-lg m-0 hamburger-wrapper row bg-light" data-toggle="modal"
+                    data-target="#menuButtonModal">
+                    <div class="p-0 m-0">
+                        <span class="bg-light-brown"></span>
+                        <span class="bg-light-brown"></span>
+                        <span class="bg-light-brown"></span>
+                    </div>
+                    <div class="p-0 m-0 text-light-brown">
+                        <p class="p-0 m-0">MENU</p>
+                    </div>
+                </button>
+                <div class="modal fade" id="menuButtonModal" tabindex="-1" role="dialog"
+                    aria-labelledby="menuButtonModalTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header py-2 border-0">
+                                <h5 class="modal-title text-light-brown d-md-none" id="menuButtonModalTitle">
+                                    Search Products
+                                </h5>
+                                <h5 class="modal-title text-light-brown d-none d-md-block" id="menuButtonModalTitle">
+                                    Menu
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body list-group m-0 p-0">
+                                <form class="input-group bg-white mb-4 d-md-none">
+                                    <input type="text" class="form-control border-primary border-right-0 ml-1"
+                                        placeholder="Search items here" aria-label="Search items here"
+                                        aria-describedby="button-addon2">
+                                    <div class="input-group-append mr-1">
+                                        <button class="btn btn-outline-primary px-1 border-left-0" type="submit"
+                                            id="button-addon2">
+                                            <span class="px-2 text-light-brown">
+                                                <i class="fas fa-search"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </form>
+                                <h5
+                                    class="list-group-item list-group-item-action text-light-brown m-0 mb-2 py-0 d-md-none">
+                                    Menu
+                                </h5>
+                                <a href="#" class="list-group-item list-group-item-action text-light-brown active">
+                                    <span class="pr-2 text-primary">
+                                        <i class="fas fa-home"></i>
+                                    </span>
+                                    Home
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action text-light-brown">
+                                    <span class="pr-2 text-primary">
+                                        <i class="fab fa-shopify"></i>
+                                    </span>
+                                    Products
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action text-light-brown">
+                                    <span class="pr-2 text-primary">
+                                        <i class="fas fa-layer-group"></i>
+                                    </span>
+                                    Categories
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action text-light-brown">
+                                    <span class="pr-2 text-primary">
+                                        <i class="fas fa-envelope"></i>
+                                    </span>
+                                    Contact us
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action text-light-brown"
+                                    tabindex="-1">
+                                    <span class="pr-2 text-primary">
+                                        <i class="fas fa-address-card"></i>
+                                    </span>
+                                    About us
+                                </a>
+                            </div>
+                            <div class="modal-footer m-0 p-0">
+                                <a href="#" target="_blank" rel="noopener noreferrer" class="social-media-link">
+                                    <span class="p-0 text-primary">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </span>
+                                </a>
+                                <a href="#" target="_blank" rel="noopener noreferrer" class="social-media-link">
+                                    <span class="p-0 text-primary">
+                                        <i class="fab fa-twitter"></i>
+                                    </span>
+                                </a>
+                                <a href="#" target="_blank" rel="noopener noreferrer" class="social-media-link">
+                                    <span class="p-0 text-primary">
+                                        <i class="fab fa-instagram-square"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main role="main" class="col-12 p-0 m-0" id="main">
+        {% block content %}
+        <h1>Content will change</h1>
+        {% endblock %}
+    </main>
+    {% include 'footer.html' %}
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" defer
+        crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" defer
+        crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" defer
+        crossorigin="anonymous">
+    </script>
+
+    <script type="module" src="{% static 'js/base.js' %}"></script>
+    <!-- <script src="https://kit.fontawesome.com/19353213c2.js" defer crossorigin="anonymous"></script> -->
+    {% block extrascripts %}
+    {% endblock %}
+</body>
+
+</html>

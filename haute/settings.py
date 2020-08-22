@@ -28,7 +28,6 @@ DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,13 +42,16 @@ INSTALLED_APPS = [
     'crispy_forms',
 
     # project created apps
-    # 'accounts'
+    'accounts',
+    'profiles',
+    'home',
+    'products',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # This changes the django default user to the one created in the acoounts app
-# AUTH_USER_MODEL = 'accounts.CustomUser'
+AUTH_USER_MODEL = 'accounts.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -81,20 +83,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'haute.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'hautedb',
-#         'USER': 'postgres',
-#         'PASSWORD': 'oladele1007AHMAD',
-#         'HOST': '127.0.0.1',
-#         'PORT': '5432',
-#     }
-# }
 
 DATABASES = {
     'default': {

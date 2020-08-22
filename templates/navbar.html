@@ -1,0 +1,70 @@
+ {% load static %}
+ {% block extrahead %}
+ <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+ {% endblock %}
+ <nav class="navbar navbar-expand-lg navbar-light col-12 row m-0 p-1">
+     <div class="col-3 p-0">
+         <div class="p-0 m-1 text-left">
+             <a class="navbar-brand m-0 p-0 text-light-brown" href="#">HAUTE</a>
+         </div>
+     </div>
+     <div class="col-9 p-0">
+         <div class="p-0 m-1 d-flex justify-content-end align-items-center align-items-end row ">
+             <div class="p-0 m-0 mx-3 search-box-wrapper position-relative d-none d-md-block">
+                 <form class="form-inline my-2 my-lg-0">
+                     <input class="form-control " type="search" placeholder="Search for items" aria-label="Search">
+                     <button class="btn position-absolute my-2 my-sm-0 px-1" type="submit">
+                         <span class="px-2 text-light-brown">
+                             <i class="fas fa-search"></i>
+                         </span>
+                     </button>
+                 </form>
+             </div>
+             <a class="p-0 m-0 position-relative" href=" #">
+                 <span class="px-0 text-light-brown">
+                     <i class="fas fa-cart-plus"></i>
+                 </span>
+                 <span class="cart-items-quantity d-flex justify-content-center align-items-center position-absolute
+                     text-deep-blue">
+                     <p class="p-0 m-0 text-white" style="font-size: .75em;">6</p>
+                 </span>
+             </a>
+             <button class="p-0 m-0 mx-3">
+                 <span class="px-2 text-light-brown">
+                     <i class="fas fa-user"></i>
+                 </span>
+             </button>
+             <button class="p-1 rounded-lg m-0 hamburger-wrapper row bg-light" data-toggle="modal"
+                 data-target="#menuButton">
+                 <div class="p-0 m-0">
+                     <span class="bg-light-brown"></span>
+                     <span class="bg-light-brown"></span>
+                     <span class="bg-light-brown"></span>
+                 </div>
+                 <div class="p-0 m-0 text-light-brown">
+                     <p class="p-0 m-0">MENU</p>
+                 </div>
+             </button>
+             <div class="modal fade" id="menuButton" tabindex="-1" role="dialog" aria-labelledby="menuButtonTitle"
+                 aria-hidden="true">
+                 <div class="modal-dialog modal-dialog-centered" role="document">
+                     <div class="modal-content">
+                         <div class="modal-header">
+                             <h5 class="modal-title" id="menuButtonTitle">Modal title</h5>
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                             </button>
+                         </div>
+                         <div class="modal-body">
+                             ...
+                         </div>
+                         <div class="modal-footer">
+                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                             <button type="button" class="btn btn-primary">Save changes</button>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </nav>
