@@ -16,3 +16,8 @@ input {
     min-height: 60vh;
     background-color: #D5F3FF;
 }
+
+.third-section {
+    min-height: 60vh;
+    background-color: #fff;
+}

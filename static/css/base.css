@@ -188,3 +188,8 @@ button {
     justify-content: center;
     align-items: center;
 }
+
+footer {
+    min-height: 20vh;
+    background-color: #D5F3FF;
+}
