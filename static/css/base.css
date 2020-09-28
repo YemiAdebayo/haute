@@ -3,6 +3,11 @@
     font-display: swap;
 }
 
+html,
+body {
+    background-color: #fff !important;
+}
+
 p {
     line-height: 140%;
 }
@@ -18,11 +23,11 @@ a {
 }
 
 .bg-light-brown {
-    background-color: #393473;
+    background-color: #161637;
 }
 
 .text-light-brown {
-    color: #393473;
+    color: #161637;
 }
 
 .text-shade-of-blue {
@@ -39,10 +44,19 @@ button {
     background-color: transparent;
 }
 
+.navbar {
+    background-color: #D5F3FF;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    margin-bottom: 10px !important;
+}
+
 .hamburger-wrapper {
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
-        0 2px 10px 0 rgba(0, 0, 0, 0.12);
-    background-color: #FFF5DA;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    /* background-color: #FFF5DA; */
+    /* background-color: #E6F8FF; */
+    background-color: #D5F3FF !important;
+    /* border: .5px solid #161637 !important; */
+    transition: background-color 300ms ease-in;
 }
 
 .hamburger-wrapper>div {
@@ -80,6 +94,7 @@ button {
     height: 18px;
     border-radius: 50%;
     background: #2096ff;
+    background: #007BFF;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     top: -0.4em;
     left: .85em;
@@ -87,16 +102,25 @@ button {
 
 .search-box-wrapper input {
     background-color: #E6F8FF !important;
-    border-left: .5px solid #6c757d !important;
-    border-bottom: .5px solid #6c757d !important;
-    border-top: .5px solid #6c757d !important;
+    background-color: #E6F8FF !important;
+    border-left: .5px solid #161637 !important;
+    border-bottom: .5px solid #161637 !important;
+    border-top: .5px solid #161637 !important;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
     min-width: 280px !important;
+}
+
+.btn-outline-secondary {
+    border-color: #161637 !important;
 }
 
 .search-box-wrapper button {
     outline: none !important;
     background-color: #E6F8FF !important;
     box-shadow: none !important;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
 #menuButtonModal h5 {

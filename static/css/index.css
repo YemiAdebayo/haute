@@ -1,9 +1,18 @@
 .first-section {
-    min-height: 100vh;
+    min-height: 80vh;
     /* padding: 60px 0; */
-    background-image: url("../img/worm-s-eye-view-of-buildings-1632788.jpg");
+    /* background-image: url("../img/worm-s-eye-view-of-buildings-1632788.jpg"); */
+}
+
+.first-section>svg {
+    display: block;
 }
 
 input {
     box-shadow: none !important;
+}
+
+.second-section {
+    min-height: 60vh;
+    background-color: #D5F3FF;
 }
