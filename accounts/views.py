@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.contrib import messages
-from django.contrib import auth
+from django.contrib.auth import authenticate, login
 from django.conf import settings
 # from templated_email import send_templated_mail
 
@@ -52,23 +52,23 @@ def sign_up_successful_view(request):
     return render(request, "accounts/sign-up-successful.html")
 
 
-# def ajax_sign_in(request):
-#     if request.method == 'POST':
-#         if request.is_ajax():
-#             print('Request is Ajax!')
-#             user = auth.authenticate(
-#                 username=request.POST['username'], password=request.POST['password'])
-#             if user is not None:
-#                 auth.login(request, user)
-#                 data = {'message': 'Login successful!',
-#                         'redirect-url': 'http://192.168.43.94:8000/accounts/base/'}
-#                 return JsonResponse(data)
-#             else:
-#                 data = {'message': 'Username or password is incorrect!'}
-#                 return JsonResponse(data)
+def ajax_sign_in(request):
+    if request.method == 'POST':
+        if request.is_ajax():
+            print('Request is Ajax!')
+            user = authenticate(
+                username=request.POST['username'], password=request.POST['password'])
+            if user is not None:
+                login(request, user)
+                data = {'message': f'Welcome back, {user.first_name}! Close this window to continue shopping.',
+                        'redirect-url': 'http://192.168.43.94:8000/accounts/base/', "status": 200}
+                return JsonResponse(data)
+            else:
+                data = {'message': 'Username or password is incorrect!'}
+                return JsonResponse(data)
 
-#         else:
-#             print('Hard to tell if Request is Ajax!')
+        else:
+            print('Hard to tell if Request is Ajax!')
 
-#     else:
-#         return render(request, 'home')
+    else:
+        return render(request, 'home')
