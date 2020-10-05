@@ -21,5 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomeListView.as_view(), name='home'),
     # path('products/', include('products.urls')),
-
+    path('accounts/', include('accounts.urls')),
 ]

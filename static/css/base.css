@@ -22,6 +22,16 @@ a {
     line-height: 140%;
 }
 
+.p-font-style {
+    font-size: .85em;
+    font-weight: 300;
+}
+
+.h5-font-style {
+    font-size: 1.1em;
+    font-weight: 300;
+}
+
 .bg-light-brown {
     background-color: #161637;
 }
@@ -102,7 +112,6 @@ button {
 
 .search-box-wrapper input {
     background-color: #E6F8FF !important;
-    background-color: #E6F8FF !important;
     border-left: .5px solid #161637 !important;
     border-bottom: .5px solid #161637 !important;
     border-top: .5px solid #161637 !important;
@@ -123,6 +132,16 @@ button {
     border-bottom-right-radius: 8px;
 }
 
+.btn-custom-green {
+    /* background-color: #D5F3FF; */
+    background-color: #B3F3FF;
+    color: #161637;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+        0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
 #menuButtonModal h5 {
     font-weight: 400;
 }
@@ -133,21 +152,31 @@ button {
 
 #menuButtonModal form>input,
 #menuButtonModal form>div>button {
-    /* border-radius: 0 !important; */
-    background-color: #E6F8FF !important;
-    /* border: none !important; */
+    /* background-color: #E6F8FF !important; */
     min-height: 2.76em !important;
     border-width: .5px !important;
+    border: 1px solid #ddd !important;
 }
 
 #menuButtonModal form>div>button {
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
+    border-right: 1px solid #ddd !important;
+    border-top: 1px solid #ddd !important;
+    border-bottom: 1px solid #ddd !important;
 }
 
 #menuButtonModal form>input {
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
+    /* border-top: 1px solid #ddd !important;
+    border-bottom: 1px solid #ddd !important;
+    border-left: 1px solid #ddd !important; */
+}
+
+#menuButtonModal form>input:focus,
+#menuButtonModal form>input:active {
+    border: 1px solid #f55a4e;
 }
 
 #menuButtonModal form>input::placeholder {
@@ -167,6 +196,7 @@ button {
 
 #menuButtonModal .modal-content {
     border-radius: 12px;
+    border-color: #fff !important;
 }
 
 #menuButtonModal .list-group-item {
@@ -192,4 +222,314 @@ button {
 footer {
     min-height: 20vh;
     background-color: #D5F3FF;
+}
+
+
+/* ============ DEFAULTS =========== */
+
+#LogInModal.modal .form-heading {
+    padding: 0 15px 15px 15px;
+    color: #3C4857;
+    ;
+}
+
+#LogInModal.modal .form-heading .title {
+    font-size: 18px;
+}
+
+.description {
+    font-size: 13px;
+    float: left;
+    margin-bottom: 15px;
+}
+
+#LogInModal.modal form {
+    background: #fff;
+    padding: 0 15px 15px 15px;
+    position: relative;
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15);
+}
+
+#LogInModal.modal .form-control {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    width: 100%;
+    height: 40px;
+    display: block;
+    border: 1px solid #DDD;
+    color: #3C4857;
+    will-change: background-position;
+    transition: all .3s cubic-bezier(.64, .09, .08, 1);
+    background-position: -100%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+#LogInModal.modal .form-control:focus {
+    border: 1px solid #f55a4e !important;
+    box-shadow: none;
+    outline: 0 none;
+}
+
+
+/* ============ MODAL =========== */
+
+#LogInModal .modal-body {
+    position: relative;
+    padding: 0px;
+}
+
+#LogInModal .modal-header {
+    padding: 10px;
+    border: none;
+}
+
+#LogInModal .modal-dialog {
+    width: 360px;
+    margin: 120px auto;
+}
+
+/* #LogInModal button.close {
+    color: #f55a4e;
+    outline: none;
+} */
+
+.close {
+    color: #3C4857;
+    opacity: 0.9;
+}
+
+
+/* ============ LABEL =========== */
+
+#LogInModal label {
+    color: #3C4857;
+    font-weight: 300;
+    transition: all .3s cubic-bezier(.64, .09, .08, 1);
+    display: inline-block;
+    font-size: 12px;
+}
+
+#LogInModal .floating-label {
+    -webkit-transform: translateY(-18px);
+    transform: translateY(-18px);
+    position: absolute
+}
+
+#LogInModal .label-required:before {
+    content: '*';
+    color: #f55a4e;
+    position: absolute;
+    margin-left: -15px
+}
+
+
+/* ============ INPUT =========== */
+
+#LogInModal.modal input[type=email],
+#LogInModal.modal input[type=text],
+#LogInModal.modal textarea,
+#LogInModal.modal input[type=password],
+#LogInModal.modal input[type=number] {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 15px;
+    width: 100%;
+    display: block;
+    border: 1px solid #DDD;
+    /* border: .5px solid #007bff; */
+    border-radius: 4px;
+    padding: 12px;
+    will-change: background-position;
+    transition: all .3s cubic-bezier(.64, .09, .08, 1);
+    background-position: -1920px 0;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    color: #3C4857;
+    font-size: 13px;
+    /* background-color: #E6F8FF; */
+    border-radius: 6px;
+}
+
+#LogInModal input[type=email].input-active,
+#LogInModal input[type=email]:focus,
+#LogInModal input[type=text].input-active,
+#LogInModal input[type=text]:focus,
+#LogInModal textarea.input-active,
+#LogInModal textarea:focus,
+#LogInModal input[type=password].input-active,
+#LogInModal input[type=password]:focus,
+#LogInModal input[type=number].input-active,
+#LogInModal input[type=number]:focus {
+    background-position: 0 0;
+    box-shadow: none;
+    outline: 0;
+    border: 1px solid #f55a4e;
+}
+
+#LogInModal.modal input[type=email].input-active,
+#LogInModal.modal input[type=email]:focus:after,
+#LogInModal.modal input[type=text].input-active,
+#LogInModal.modal input[type=text]:focus:after,
+#LogInModal.modal textarea.input-active,
+#LogInModal.modal textarea:focus:after,
+#LogInModal.modal input[type=password].input-active,
+#LogInModal.modal input[type=password]:focus:after,
+#LogInModal.modal input[type=number].input-active,
+#LogInModal.modal input[type=number]:focus:after {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 15px;
+    width: 100%;
+    display: block;
+    border: none;
+    padding: 15px 0;
+    border-bottom: solid 1px #DDD;
+    will-change: background-position;
+    transition: all .3s cubic-bezier(.64, .09, .08, 1);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #DDD 96%);
+    background-position: -1920px 0;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    color: #000;
+    font-size: 14px;
+}
+
+#LogInModal input[type=email]::-webkit-input-placeholder,
+#LogInModal input[type=text]::-webkit-input-placeholder,
+#LogInModal textarea::-webkit-input-placeholder,
+#LogInModal input[type=password]::-webkit-input-placeholder,
+#LogInModal input[type=number]::-webkit-input-placeholder {
+    transition: all .2s cubic-bezier(.64, .09, .08, 1);
+    color: #3C4857;
+}
+
+#LogInModal input[type=radio]:after,
+#LogInModal input[type=radio]:before {
+    content: '';
+    position: absolute;
+    transition: all .3s cubic-bezier(.64, .09, .08, 1)
+}
+
+#LogInModal input[type=checkbox] {
+    position: relative;
+    cursor: pointer;
+    top: -2px;
+    margin-left: -1px;
+    margin: 5px 12px 5px 0px;
+}
+
+#LogInModal input[type=checkbox]:before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    background: #fff;
+    position: absolute;
+    top: -2px;
+    margin-left: -1px;
+}
+
+#LogInModal input[type=checkbox]:after {
+    content: '\2713';
+    color: #161637;
+    background: #f55a4e;
+    background: #D5F3FF;
+    position: absolute;
+    top: -2px;
+    margin-left: -1px;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #D5F3FF;
+    border-radius: 3px;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity .3s cubic-bezier(.64, .09, .08, 1);
+    will-change: opacity
+}
+
+#LogInModal input[type=checkbox]:checked:after {
+    opacity: 1
+}
+
+#LogInModal input[type=radio] {
+    position: relative;
+    top: 2px;
+    left: 2px;
+    margin: 0 8px;
+    cursor: pointer
+}
+
+#LogInModal input[type=radio]:before {
+    background-color: #fff;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #f55a4e;
+    display: inline-block;
+    top: -5px;
+    left: -8px;
+    background-image: radial-gradient(circle, #f55a4e 60%, #fff 70%);
+    background-size: 0;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    will-change: background-size;
+    z-index: 2
+}
+
+#LogInModal input[type=radio]:after {
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border-radius: 50%
+}
+
+#LogInModal input[type=radio]:checked:before {
+    background-size: 14px 14px
+}
+
+#LogInModal textarea.form-control {
+    padding: 10px 15px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+::placeholder {
+    color: #3C4857 !important;
+}
+
+/* ============ FONT AWESOME SOCIAL ICONS =========== */
+
+#LogInModal .social-line {
+    margin: 10px 0;
+    display: flex;
+    flex: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+#LogInModal .social-line a {
+    font-size: 18px;
+    height: 40px;
+    width: 40px;
+    background-color: #E4F6FD;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

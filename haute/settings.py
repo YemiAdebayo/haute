@@ -148,13 +148,13 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media")
 
-# LOGIN_REDIRECT_URL = 'dashboard'
-# LOGIN_URL = 'sign-in'
+LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'sign-in'
 # LOGOUT_URL = 'sign-out'
 
 # TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django.TemplateBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL = 'Brilliant Nigeria <care@brilliant.ng>'
+DEFAULT_FROM_EMAIL = 'Adeyemi Adebayo <bayoade1007@gmail.com>'
 EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_USE_SSL = True
 EMAIL_PORT = config('EMAIL_PORT', cast=int)

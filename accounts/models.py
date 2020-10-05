@@ -202,8 +202,8 @@ class User(AbstractBaseUser):
         return self.is_active
 
     """
-        Not to self: fields in a model (e.g, is_active) can not have the same name 
+        Note to self: fields in a model (e.g, is_active) can not have the same name 
         as properties on the same model (e.g @propertyis_active). If they do, the property will over-write 
         the field at the time of migration. So what django sees is a property name is_active, 
-        and not a filed. I had a headache dealing with this.
+        and not a field. I had a headache dealing with this.
     """

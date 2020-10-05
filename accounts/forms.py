@@ -76,7 +76,7 @@ class RegistrationForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email', 'phone_number')
-    # Registration for template for the frontend
+    # Registration template for the frontend
 
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={
