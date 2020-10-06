@@ -1,3 +1,4 @@
+from django.http import request
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model, authenticate, login
 from django.views.generic import CreateView, FormView
@@ -62,7 +63,7 @@ def ajax_sign_in(request):
                 login(request, user)
                 data = {'message': f'Welcome back, {user.first_name}! Close this window to continue shopping.',
                         'redirect-url': 'http://192.168.43.94:8000/accounts/base/', "status": 200}
-                return JsonResponse(data)
+                return JsonResponse(data, status=200)
             else:
                 data = {'message': 'Username or password is incorrect!'}
                 return JsonResponse(data)
@@ -72,3 +73,6 @@ def ajax_sign_in(request):
 
     else:
         return render(request, 'home')
+
+def ajax_update_sign_in_status(request):
+    return render(request, "accounts/ajax-update-login-status.html")

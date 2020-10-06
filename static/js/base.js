@@ -10,12 +10,26 @@ $(document).ready(function() {
         // prevent form  from submitting synchronously
         e.preventDefault();
 
-        $("#submitBtn").prop("disabled", true).html(
-            `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Working...`
-        );
+
 
         //get csrf cookie and set the cookie in ajax
         let csrftoken = getCookie('csrftoken');
+
+        //get the login form by ID and acquire the login url provided as html dataset
+        const ajaxLoginForm = document.querySelector('#ajaxLoginForm');
+        let ajaxLoginUrl = ajaxLoginForm.dataset.ajaxloginurl;
+
+        // serialize the form data 
+        let $serializedData = $(this).serialize();
+
+        $("#ajaxLoginForm").replaceWith(
+            `<div class="d-flex justify-content-center align-items-center" style="height: 240px;">
+                <div class="spinner-border p-2 m-0" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <p class="p-2 m-0">Please wait...</p>
+            </div>`
+        );
 
         $.ajaxSetup({
             beforeSend: function(xhr, settings) {
@@ -24,13 +38,6 @@ $(document).ready(function() {
                 }
             }
         });
-
-        //get the login form by ID and acquire the login url provided as html dataset
-        const ajaxLoginForm = document.querySelector('#ajaxLoginForm');
-        let ajaxLoginUrl = ajaxLoginForm.dataset.ajaxloginurl;
-
-        // serialize the form data 
-        let $serializedData = $(this).serialize();
 
         //send serialized form as ajax request
         $.ajax({
@@ -48,6 +55,6 @@ $(document).ready(function() {
                 console.log(response)
             }
         });
-        $("#ajaxLoginForm .modal-body").fadeOut(3000);
+        // $("#ajaxLoginForm .modal-body").fadeOut(3000);
     });
 });

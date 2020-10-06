@@ -150,7 +150,8 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media")
 
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'sign-in'
-# LOGOUT_URL = 'sign-out'
+LOGOUT_URL = 'sign-out'
+LOGOUT_REDIRECT_URL = 'home'
 
 # TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django.TemplateBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

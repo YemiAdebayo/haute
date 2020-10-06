@@ -1,5 +1,4 @@
-<!DOCTYPE html> {% load static %}
-{% load crispy_forms_tags %}
+<!DOCTYPE html> {% load static %} {% load crispy_forms_tags %}
 <html lang="en">
 
 <head>
@@ -39,7 +38,7 @@
     <nav class="navbar navbar-expand-lg col-12 row m-0  px-1 py-2 px-md-3">
         <div class="col-3 p-0">
             <div class="p-0 pl-md-3 m-1 text-left">
-                <a class="navbar-brand m-0 p-0 text-light-brown" href="#">
+                <a class="navbar-brand m-0 p-0 text-light-brown" href="{% url 'home' %}">
                     <img src="{% static 'img/placeholder-logo.png' %}" height="30" alt="company logo" loading="lazy"> HAUTE
                 </a>
             </div>
@@ -74,7 +73,7 @@
                     </span>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="{% url 'sign-out' %}">Action</a>
                     <a class="dropdown-item" href="#">Another action</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Something else here</a>
@@ -84,8 +83,7 @@
                     <span class="px-2 text-light-brown">
                         <i class="fas fa-user"></i>
                     </span>
-                </button>
-                {% endif %}
+                </button> {% endif %}
                 <button class="p-1 rounded-lg m-0 hamburger-wrapper row bg-light" data-toggle="modal" data-target="#menuButtonModal">
                     <div class="p-0 m-0">
                         <span class="bg-light-brown"></span>
@@ -182,7 +180,6 @@
                             </div>
                             <div class="modal-body">
                                 <form action="{% url 'sign-in' %}" method="POST" id="ajaxLoginForm" data-ajaxloginurl="{% url 'login-with-ajax' %}">
-                                    
                                     <!-- Form Title -->
                                     <div class="form-heading text-center">
                                         <h6 class="title">SIGN IN</h6>
@@ -248,7 +245,7 @@
 
     </footer>
 
-     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     </script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" defer crossorigin="anonymous">
     </script>

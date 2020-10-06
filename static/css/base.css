@@ -136,8 +136,7 @@ button {
     /* background-color: #D5F3FF; */
     background-color: #B3F3FF;
     color: #161637;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
-        0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     border-radius: 20px;
     text-transform: uppercase;
 }
@@ -249,7 +248,6 @@ footer {
     position: relative;
     width: 100%;
     border-radius: 8px;
-    box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15);
 }
 
 #LogInModal.modal .form-control {
@@ -293,6 +291,7 @@ footer {
     width: 360px;
     margin: 120px auto;
 }
+
 
 /* #LogInModal button.close {
     color: #f55a4e;
@@ -512,6 +511,7 @@ footer {
 ::placeholder {
     color: #3C4857 !important;
 }
+
 
 /* ============ FONT AWESOME SOCIAL ICONS =========== */
 
