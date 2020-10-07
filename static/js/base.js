@@ -5,42 +5,49 @@ import {
 
 $(document).ready(function() {
 
-    $("#ajaxLoginForm").submit(function(e) {
+    //Most of the globally scoped constants are defined here.
+    const ajaxUpdateLoginStatusUrlDiv = document.querySelector('#LogInModal'),
+        ajaxUpdateLoginStatusUrl = ajaxUpdateLoginStatusUrlDiv.dataset.ajaxupdatestatusloginurl,
+        $ajaxLoginStatus = $("#ajaxLoginStatus"),
+        $ajaxLoginForm = $("#ajaxLoginForm");
+
+    // This function asynchronously modifies the DOM after a successful login.
+    const updateLogin = () => {
+        $.ajax({
+            type: 'GET',
+            url: ajaxUpdateLoginStatusUrl,
+            data: '',
+            success: function(response) {
+                $ajaxLoginStatus.html(response);
+            },
+            error: function(response) {
+                console.log(response)
+            }
+        });
+    };
+
+    $ajaxLoginForm.submit(function(e) {
 
         // prevent form  from submitting synchronously
         e.preventDefault();
 
-        function updateLogin() {
-            $.ajax({
-                type: 'GET',
-                url: '/accounts/update-login-status-with-ajax/',
-                data: '',
-                success: function(response) {
-                    $("#ajaxLoginStatus").html(response);
-                },
-                error: function(response) {
-                    console.log(response)
-                }
-            });
-        };
         //get csrf cookie and set the cookie in ajax
         let csrftoken = getCookie('csrftoken');
 
-        //get the login form by ID and acquire the login url provided as html dataset
-        const ajaxLoginForm = document.querySelector('#ajaxLoginForm');
-        let ajaxLoginUrl = ajaxLoginForm.dataset.ajaxloginurl;
+        //Get the login url provided as html dataset on ajaxLoginForm
+        let ajaxLoginUrl = $ajaxLoginForm.data("ajaxloginurl");
 
         // serialize the form data 
-        let $serializedData = $(this).serialize();
+        let $serializedData = $ajaxLoginForm.serialize();
 
-        $("#ajaxLoginForm").replaceWith(
-            `<div class="d-flex justify-content-center align-items-center" style="height: 240px;">
-                <div class="spinner-border p-2 m-0" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
-                <p class="p-2 m-0">Please wait...</p>
-            </div>`
-        );
+        // $ajaxLoginForm.replaceWith(
+        //     `<div class="d-flex justify-content-center align-items-center" style="height: 240px;">
+        //         <div class="spinner-border p-2 m-0" role="status">
+        //             <span class="sr-only">Loading...</span>
+        //         </div>
+        //         <p class="p-2 m-0">Please wait...</p>
+        //     </div>`
+        // );
 
         $.ajaxSetup({
             beforeSend: function(xhr, settings) {
@@ -56,14 +63,15 @@ $(document).ready(function() {
             url: ajaxLoginUrl,
             data: $serializedData,
             success: function(response) {
-                //reset the form after successful submit
-                // const { message, status } = response;
-                // console.log(message);
-                // console.log("status code: " + status);
-                console.log(response);
+                //Get success message and other data
+                const { message, status } = response;
+
+                //Update the modal to show login success message
+                // let processedMessage = `${message}`;
+                console.log(message);
+                $ajaxLoginForm.replaceWith(message);
 
                 $('#LogInModal').on('hidden.bs.modal', function(e) {
-                    // do something...
                     updateLogin();
                 })
             },
