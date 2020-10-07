@@ -10,8 +10,19 @@ $(document).ready(function() {
         // prevent form  from submitting synchronously
         e.preventDefault();
 
-
-
+        function updateLogin() {
+            $.ajax({
+                type: 'GET',
+                url: '/accounts/update-login-status-with-ajax/',
+                data: '',
+                success: function(response) {
+                    $("#ajaxLoginStatus").html(response);
+                },
+                error: function(response) {
+                    console.log(response)
+                }
+            });
+        };
         //get csrf cookie and set the cookie in ajax
         let csrftoken = getCookie('csrftoken');
 
@@ -46,15 +57,20 @@ $(document).ready(function() {
             data: $serializedData,
             success: function(response) {
                 //reset the form after successful submit
-                const { message, status } = response;
-                console.log(message);
-                console.log("status code: " + status);
-                // $('#profile-update-form').unbind('submit').submit();
+                // const { message, status } = response;
+                // console.log(message);
+                // console.log("status code: " + status);
+                console.log(response);
+
+                $('#LogInModal').on('hidden.bs.modal', function(e) {
+                    // do something...
+                    updateLogin();
+                })
             },
             error: function(response) {
                 console.log(response)
             }
         });
-        // $("#ajaxLoginForm .modal-body").fadeOut(3000);
     });
+
 });

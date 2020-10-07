@@ -53,7 +53,7 @@ def sign_up_successful_view(request):
     return render(request, "accounts/sign-up-successful.html")
 
 
-def ajax_sign_in(request):
+def ajax_login(request):
     if request.method == 'POST':
         if request.is_ajax():
             print('Request is Ajax!')
@@ -62,7 +62,7 @@ def ajax_sign_in(request):
             if user is not None:
                 login(request, user)
                 data = {'message': f'Welcome back, {user.first_name}! Close this window to continue shopping.',
-                        'redirect-url': 'http://192.168.43.94:8000/accounts/base/', "status": 200}
+                        'redirect-url': '/', "status": 200}
                 return JsonResponse(data, status=200)
             else:
                 data = {'message': 'Username or password is incorrect!'}
@@ -74,5 +74,5 @@ def ajax_sign_in(request):
     else:
         return render(request, 'home')
 
-def ajax_update_sign_in_status(request):
+def ajax_update_login_status(request):
     return render(request, "accounts/ajax-update-login-status.html")

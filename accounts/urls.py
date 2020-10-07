@@ -5,7 +5,9 @@ from django.conf.urls.static import static
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
-from .views import SignUpView,sign_up_successful_view, ajax_sign_in
+from .views import (SignUpView, ajax_update_login_status,
+                    sign_up_successful_view, ajax_login, 
+                    )
 
 urlpatterns = [
     url(r'sign-up/$', SignUpView.as_view(), name="sign-up"),
@@ -29,7 +31,8 @@ urlpatterns = [
         template_name='accounts/password-reset-complete.html'), name="password_reset_complete"),
 
     # url(r'sign-up-successful/$', sign_up_successful_view, name="sign-up-successful"),
-    url(r'login-with-ajax/$', ajax_sign_in, name="login-with-ajax"),
+    url(r'login-with-ajax/$', ajax_login, name="login-with-ajax"),
+    url(r'update-login-status-with-ajax/$', ajax_update_login_status, name="update-login-status-with-ajax"),
     # url(r'dashboard/$', dashboard_view, name="dashboard"),
     # # url(r'profile/$', profile_update_view, name="profile"),
 ]
