@@ -180,6 +180,7 @@
                             </div>
                             <div class="modal-body">
                                 <form action="{% url 'sign-in' %}" method="POST" id="ajaxLoginForm" data-ajaxloginurl="{% url 'login-with-ajax' %}">
+                                    {% csrf_token %}
                                     <!-- Form Title -->
                                     <div class="form-heading text-center">
                                         <h6 class="title">SIGN IN</h6>
@@ -202,6 +203,11 @@
                                             </a>
                                         </div>
                                     </div>
+                                    <div class="row py-0 my-0" class="" id="ajaxLoginErrorDiv">
+                                        <div class="col-md-12 text-center pb-2 pt-0 my-0">
+                                            <span class="text-danger text-center py-0 my-0" style="font-size: .75em;">User name or password is incorrect!</span>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <input type="text" name="username" placeholder="Email" required />
@@ -222,10 +228,11 @@
                                                     data-dismiss="modal">Forget Password?</a></label>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row pb-4 pt-2">
                                         <div class="col-md-12 text-center">
-                                            <button id="submitBtn" type="submit" class="btn btn-md btn-custom-green p-font-style px-4 py3">Sign
-                                                In</button>
+                                            <button id="ajaxLoginSubmitBtn" type="submit" class="btn btn-md btn-custom-green p-font-style px-4 py3">
+                                                Sign In
+                                            </button>
                                         </div>
                                     </div>
                                 </form>

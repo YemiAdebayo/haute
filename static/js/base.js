@@ -31,6 +31,11 @@ $(document).ready(function() {
         // prevent form  from submitting synchronously
         e.preventDefault();
 
+        //Disable submit button to prevent multiple submit
+        $("#ajaxLoginSubmitBtn").prop("disabled", true).html(
+            `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Working...`
+        );
+
         //get csrf cookie and set the cookie in ajax
         let csrftoken = getCookie('csrftoken');
 
@@ -39,15 +44,6 @@ $(document).ready(function() {
 
         // serialize the form data 
         let $serializedData = $ajaxLoginForm.serialize();
-
-        // $ajaxLoginForm.replaceWith(
-        //     `<div class="d-flex justify-content-center align-items-center" style="height: 240px;">
-        //         <div class="spinner-border p-2 m-0" role="status">
-        //             <span class="sr-only">Loading...</span>
-        //         </div>
-        //         <p class="p-2 m-0">Please wait...</p>
-        //     </div>`
-        // );
 
         $.ajaxSetup({
             beforeSend: function(xhr, settings) {
@@ -61,22 +57,26 @@ $(document).ready(function() {
         $.ajax({
             type: 'POST',
             url: ajaxLoginUrl,
+            // mode: 'same-origin',
             data: $serializedData,
             success: function(response) {
                 //Get success message and other data
                 const { message, status } = response;
 
                 //Update the modal to show login success message
-                // let processedMessage = `${message}`;
-                console.log(message);
                 $ajaxLoginForm.replaceWith(message);
 
+                //Update the login status div
                 $('#LogInModal').on('hidden.bs.modal', function(e) {
                     updateLogin();
                 })
             },
             error: function(response) {
-                console.log(response)
+
+                $("#ajaxLoginErrorDiv").fadeIn(2000);
+                $("#ajaxLoginSubmitBtn").prop("disabled", false).text(
+                    `Sign In`
+                );
             }
         });
     });

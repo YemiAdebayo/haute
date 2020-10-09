@@ -120,6 +120,10 @@ button {
     min-width: 280px !important;
 }
 
+#ajaxLoginErrorDiv {
+    display: none;
+}
+
 .btn-outline-secondary {
     border-color: #161637 !important;
 }
