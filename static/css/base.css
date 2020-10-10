@@ -124,6 +124,20 @@ button {
     display: none;
 }
 
+.ajax-field-validation-error-message {
+    display: none;
+    font-size: .75em;
+    min-height: 50px;
+}
+
+
+/* #ajaxLogOutDiv {
+    position: relative;
+    left: 1em;
+    top: 12em;
+    width: 15em;
+} */
+
 .btn-outline-secondary {
     border-color: #161637 !important;
 }

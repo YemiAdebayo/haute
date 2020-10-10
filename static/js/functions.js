@@ -120,17 +120,21 @@ export function isValidPhoneNumber(input) {
 
 // This function tests if input value="" and returns an error 
 export function writeInputErrorMessage(param) {
-    if (!(param.next().hasClass("warning"))) {
+    if (!(param.prev().hasClass("warning"))) {
         if ($.trim(param.val()) == "" || typeof($.trim(param.val())) == undefined) {
-            param.after($("<span class='warning'>This field cannot be left empty</span> ").css("display", "inline-block"));
+            // param.after($("<span class='warning'>This field cannot be left empty</span> ").css("display", "inline-block"));
+            param.prev().fadeIn(1000);
+            param.prev().addClass("warning");
         }
     }
 }
 
 
 export function removeInputErrorMessage(param) {
-    if ((param.next().hasClass("warning"))) {
-        param.next().remove();
+    if ((param.prev().hasClass("warning"))) {
+        // param.next().remove();
+        param.prev().fadeOut(1000);
+        param.prev().removeClass("warning");
     }
 }
 

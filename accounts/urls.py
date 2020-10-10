@@ -6,7 +6,8 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
 from .views import (SignUpView, ajax_update_login_status,
-                    sign_up_successful_view, ajax_login, 
+                    sign_up_successful_view, ajax_login,
+                    ajax_logout,
                     )
 
 urlpatterns = [
@@ -32,6 +33,7 @@ urlpatterns = [
 
     # url(r'sign-up-successful/$', sign_up_successful_view, name="sign-up-successful"),
     url(r'login-with-ajax/$', ajax_login, name="login-with-ajax"),
+    url(r'logout-with-ajax/$', ajax_logout, name="logout-with-ajax"),
     url(r'update-login-status-with-ajax/$', ajax_update_login_status, name="update-login-status-with-ajax"),
     # url(r'dashboard/$', dashboard_view, name="dashboard"),
     # # url(r'profile/$', profile_update_view, name="profile"),
