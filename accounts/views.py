@@ -82,7 +82,7 @@ def ajax_update_login_status(request):
     return render(request, "accounts/ajax-update-login-status.html")
 
 def ajax_logout(request):
-    if request.method == 'POST':
+    if request.method == 'GET':
         #Check if the request is ajax
         if request.is_ajax():
             print('Request is Ajax!')
