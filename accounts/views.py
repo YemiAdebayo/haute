@@ -8,6 +8,7 @@ from django.http import HttpResponseForbidden
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
+from django.views.decorators.csrf import ensure_csrf_cookie
 # from templated_email import send_templated_mail
 
 from .forms import RegistrationForm
@@ -65,11 +66,11 @@ def ajax_login(request):
                 login(request, user)
                 data = {
                         'message': f'<hr><div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 240px;"><h5 class="p-2 mx-2 my-0 h5-font-style text-center" style="font-size: 3em;"><span class="px-2 text-success"><i class="fas fa-user-check"></i></span></h5><h5 class="p-2 m-1 h5-font-style text-center text-blue" style="font-size: .9em;">Welcome back <strong class="text-success">{user.first_name}</strong>! You have successfully logged in. Please close this window to continue browsing.</h5></div><div class="modal-footer"><button type="button" class="btn btn-secondary rounded-lg" data-dismiss="modal">Close</button></div>',
-                        'redirect-url': '/', "status": 200,
+                        'redirect-url': '/', 'status':200
                        }
                 return JsonResponse(data, status=200)
             else:
-                data = {'message': 'Username or password is incorrect!', "status": 401,}
+                data = {'message': 'Username or password is incorrect!'}
                 return JsonResponse(data, status=401)
 
         else:
@@ -78,6 +79,7 @@ def ajax_login(request):
     else:
         return render(request, 'home')
 
+@ensure_csrf_cookie
 def ajax_update_login_status(request):
     return render(request, "accounts/ajax-update-login-status.html")
 
