@@ -43,8 +43,10 @@ $(document).ready(function() {
 
 
     // This function asynchronously modifies the DOM after a successful login.
-    const updateLoginTemplate = () => {
-        $.ajax({
+
+    async function updateLoginTemplate() {
+
+        return await $.ajax({
                 type: 'GET',
                 url: ajaxUpdateLoginStatusUrl,
                 data: ''
@@ -57,11 +59,10 @@ $(document).ready(function() {
             })
             .always(function() {
                 console.log("Login template updated!");
-            })
+            });
     };
 
-
-    const loginWithAjaxHelperFunction = () => {
+    const initializeAjaxLogin = () => {
 
         // let csrftokenFromDOM = document.querySelector("input[name='csrfmiddlewaretoken']").value;
         // console.log(csrftokenFromDOM);
@@ -90,7 +91,6 @@ $(document).ready(function() {
 
             })
         };
-
     };
 
     const loginWithAjax = () => {
@@ -118,8 +118,12 @@ $(document).ready(function() {
                 //Update the modal to show login success message
                 $("#ajaxLoginForm").replaceWith(message);
 
-                $('#LogInModal').on('hidden.bs.modal', function() {
-                    updateLoginTemplate();
+
+                $('#LogInModal').on('hide.bs.modal', function() {
+                    updateLoginTemplate()
+                        .then(res => {
+                            initializeAjaxLogout();
+                        });
                 });
 
             })
@@ -127,26 +131,19 @@ $(document).ready(function() {
 
                 //Log error and error stattus code in the console.
                 // console.log(errorThrown, textStatus);
-                $ajaxLoginErrorDiv.fadeIn(2000);
+                $ajaxLoginErrorDiv.fadeIn(1500);
                 $ajaxLoginSubmitBtn.prop("disabled", false).text(
                     `Sign In`
                 );
             })
             .always(function(jqXHROrData, textStatus, jqXHROrErrorThrown) {
 
-                //Update the login status div and icon
-                $('#LogInModal').on('hidden.bs.modal', function() {
+                //Run other executions here
 
-                    updateLoginTemplate();
-
-                    setTimeout(() => {
-                        logoutWithAjaxHelperFunction();
-                    }, 2000);
-                });
             });
     };
 
-    const logoutWithAjaxHelperFunction = () => {
+    const initializeAjaxLogout = () => {
 
         let ajaxLogoutLink = document.querySelector("#ajaxLogoutLink");
         //Check that Ajax logout link is in the DOM on document ready
@@ -184,11 +181,12 @@ $(document).ready(function() {
                 // $ajaxLoginForm.replaceWith(message);
 
                 //Update the login status div
-                updateLoginTemplate();
+                // updateLoginTemplate();
 
-                setTimeout(() => {
-                    loginWithAjaxHelperFunction();
-                }, 1000)
+                updateLoginTemplate()
+                    .then(res => {
+                        initializeAjaxLogin();
+                    });
 
             })
             .fail(function(data, textStatus) {
@@ -208,7 +206,7 @@ $(document).ready(function() {
             });
     };
 
-    logoutWithAjaxHelperFunction();
-    loginWithAjaxHelperFunction();
+    initializeAjaxLogout();
+    initializeAjaxLogin();
 
 });
