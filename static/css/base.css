@@ -1,6 +1,13 @@
 * {
     font-family: 'Roboto', sans-serif;
     font-display: swap;
+    box-sizing: border-box;
+}
+
+*::before,
+*::after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html,
@@ -159,6 +166,37 @@ button {
     text-transform: uppercase;
 }
 
+#logoutDropdownWrapper {
+    position: relative !important;
+}
+
+#logoutDropdownBtnDiv {
+    position: absolute !important;
+    left: -6em !important;
+    top: 2.95em !important;
+    width: 250px;
+    border-radius: 8px;
+    border: none !important;
+    /* box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px; */
+    /* box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px; */
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+#logoutDropdownBtnDiv::before {
+    display: inline-block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    margin-left: 7.5em;
+    margin-top: -1.2em;
+    /* vertical-align: 15em; */
+    content: "";
+    border-top: 0;
+    border-right: 0.7em solid transparent;
+    border-bottom: 0.8em solid #fff;
+    border-left: 0.7em solid transparent;
+}
+
 #menuButtonModal h5 {
     font-weight: 400;
 }
@@ -244,13 +282,13 @@ footer {
 
 /* ============ DEFAULTS =========== */
 
-#LogInModal.modal .form-heading {
+.authenticationForm.modal .form-heading {
     padding: 0 15px 15px 15px;
     color: #3C4857;
     ;
 }
 
-#LogInModal.modal .form-heading .title {
+.authenticationForm.modal .form-heading .title {
     font-size: 18px;
 }
 
@@ -260,7 +298,7 @@ footer {
     margin-bottom: 15px;
 }
 
-#LogInModal.modal form {
+.authenticationForm.modal form {
     background: #fff;
     padding: 0 15px 15px 15px;
     position: relative;
@@ -268,7 +306,7 @@ footer {
     border-radius: 8px;
 }
 
-#LogInModal.modal .form-control {
+.authenticationForm.modal .form-control {
     position: relative;
     z-index: 2;
     margin: 0;
@@ -286,7 +324,7 @@ footer {
     margin-bottom: 15px;
 }
 
-#LogInModal.modal .form-control:focus {
+.authenticationForm.modal .form-control:focus {
     border: 1px solid #f55a4e !important;
     box-shadow: none;
     outline: 0 none;
@@ -295,23 +333,23 @@ footer {
 
 /* ============ MODAL =========== */
 
-#LogInModal .modal-body {
+.authenticationForm .modal-body {
     position: relative;
     padding: 0px;
 }
 
-#LogInModal .modal-header {
+.authenticationForm .modal-header {
     padding: 10px;
     border: none;
 }
 
-#LogInModal .modal-dialog {
+.authenticationForm .modal-dialog {
     width: 360px;
     margin: 120px auto;
 }
 
 
-/* #LogInModal button.close {
+/* .authenticationForm button.close {
     color: #f55a4e;
     outline: none;
 } */
@@ -324,7 +362,8 @@ footer {
 
 /* ============ LABEL =========== */
 
-#LogInModal label {
+.authenticationForm label,
+.authenticationForm p {
     color: #3C4857;
     font-weight: 300;
     transition: all .3s cubic-bezier(.64, .09, .08, 1);
@@ -332,13 +371,33 @@ footer {
     font-size: 12px;
 }
 
-#LogInModal .floating-label {
+.customLinkStyle {
+    color: #007bff;
+    text-decoration: none;
+    transition: all .3s cubic-bezier(.64, .09, .08, 1);
+}
+
+.modal-content.for-signup {
+    display: none;
+    opacity: 0;
+}
+
+.customLinkStyle:hover {
+    color: #6610f2;
+    text-decoration: underline;
+}
+
+.authenticationForm p {
+    font-size: 14px;
+}
+
+.authenticationForm .floating-label {
     -webkit-transform: translateY(-18px);
     transform: translateY(-18px);
     position: absolute
 }
 
-#LogInModal .label-required:before {
+.authenticationForm .label-required:before {
     content: '*';
     color: #f55a4e;
     position: absolute;
@@ -348,11 +407,11 @@ footer {
 
 /* ============ INPUT =========== */
 
-#LogInModal.modal input[type=email],
-#LogInModal.modal input[type=text],
-#LogInModal.modal textarea,
-#LogInModal.modal input[type=password],
-#LogInModal.modal input[type=number] {
+.authenticationForm.modal input[type=email],
+.authenticationForm.modal input[type=text],
+.authenticationForm.modal textarea,
+.authenticationForm.modal input[type=password],
+.authenticationForm.modal input[type=number] {
     position: relative;
     z-index: 2;
     margin-bottom: 15px;
@@ -373,32 +432,32 @@ footer {
     border-radius: 6px;
 }
 
-#LogInModal input[type=email].input-active,
-#LogInModal input[type=email]:focus,
-#LogInModal input[type=text].input-active,
-#LogInModal input[type=text]:focus,
-#LogInModal textarea.input-active,
-#LogInModal textarea:focus,
-#LogInModal input[type=password].input-active,
-#LogInModal input[type=password]:focus,
-#LogInModal input[type=number].input-active,
-#LogInModal input[type=number]:focus {
+.authenticationForm input[type=email].input-active,
+.authenticationForm input[type=email]:focus,
+.authenticationForm input[type=text].input-active,
+.authenticationForm input[type=text]:focus,
+.authenticationForm textarea.input-active,
+.authenticationForm textarea:focus,
+.authenticationForm input[type=password].input-active,
+.authenticationForm input[type=password]:focus,
+.authenticationForm input[type=number].input-active,
+.authenticationForm input[type=number]:focus {
     background-position: 0 0;
     box-shadow: none;
     outline: 0;
     border: 1px solid #f55a4e;
 }
 
-#LogInModal.modal input[type=email].input-active,
-#LogInModal.modal input[type=email]:focus:after,
-#LogInModal.modal input[type=text].input-active,
-#LogInModal.modal input[type=text]:focus:after,
-#LogInModal.modal textarea.input-active,
-#LogInModal.modal textarea:focus:after,
-#LogInModal.modal input[type=password].input-active,
-#LogInModal.modal input[type=password]:focus:after,
-#LogInModal.modal input[type=number].input-active,
-#LogInModal.modal input[type=number]:focus:after {
+.authenticationForm.modal input[type=email].input-active,
+.authenticationForm.modal input[type=email]:focus:after,
+.authenticationForm.modal input[type=text].input-active,
+.authenticationForm.modal input[type=text]:focus:after,
+.authenticationForm.modal textarea.input-active,
+.authenticationForm.modal textarea:focus:after,
+.authenticationForm.modal input[type=password].input-active,
+.authenticationForm.modal input[type=password]:focus:after,
+.authenticationForm.modal input[type=number].input-active,
+.authenticationForm.modal input[type=number]:focus:after {
     position: relative;
     z-index: 2;
     margin-bottom: 15px;
@@ -417,23 +476,23 @@ footer {
     font-size: 14px;
 }
 
-#LogInModal input[type=email]::-webkit-input-placeholder,
-#LogInModal input[type=text]::-webkit-input-placeholder,
-#LogInModal textarea::-webkit-input-placeholder,
-#LogInModal input[type=password]::-webkit-input-placeholder,
-#LogInModal input[type=number]::-webkit-input-placeholder {
+.authenticationForm input[type=email]::-webkit-input-placeholder,
+.authenticationForm input[type=text]::-webkit-input-placeholder,
+.authenticationForm textarea::-webkit-input-placeholder,
+.authenticationForm input[type=password]::-webkit-input-placeholder,
+.authenticationForm input[type=number]::-webkit-input-placeholder {
     transition: all .2s cubic-bezier(.64, .09, .08, 1);
     color: #3C4857;
 }
 
-#LogInModal input[type=radio]:after,
-#LogInModal input[type=radio]:before {
+.authenticationForm input[type=radio]:after,
+.authenticationForm input[type=radio]:before {
     content: '';
     position: absolute;
     transition: all .3s cubic-bezier(.64, .09, .08, 1)
 }
 
-#LogInModal input[type=checkbox] {
+.authenticationForm input[type=checkbox] {
     position: relative;
     cursor: pointer;
     top: -2px;
@@ -441,7 +500,7 @@ footer {
     margin: 5px 12px 5px 0px;
 }
 
-#LogInModal input[type=checkbox]:before {
+.authenticationForm input[type=checkbox]:before {
     content: '';
     width: 20px;
     height: 20px;
@@ -453,7 +512,7 @@ footer {
     margin-left: -1px;
 }
 
-#LogInModal input[type=checkbox]:after {
+.authenticationForm input[type=checkbox]:after {
     content: '\2713';
     color: #161637;
     background: #f55a4e;
@@ -480,11 +539,11 @@ footer {
     will-change: opacity
 }
 
-#LogInModal input[type=checkbox]:checked:after {
+.authenticationForm input[type=checkbox]:checked:after {
     opacity: 1
 }
 
-#LogInModal input[type=radio] {
+.authenticationForm input[type=radio] {
     position: relative;
     top: 2px;
     left: 2px;
@@ -492,7 +551,7 @@ footer {
     cursor: pointer
 }
 
-#LogInModal input[type=radio]:before {
+.authenticationForm input[type=radio]:before {
     background-color: #fff;
     width: 20px;
     height: 20px;
@@ -509,18 +568,18 @@ footer {
     z-index: 2
 }
 
-#LogInModal input[type=radio]:after {
+.authenticationForm input[type=radio]:after {
     width: 20px;
     height: 20px;
     background: #fff;
     border-radius: 50%
 }
 
-#LogInModal input[type=radio]:checked:before {
+.authenticationForm input[type=radio]:checked:before {
     background-size: 14px 14px
 }
 
-#LogInModal textarea.form-control {
+.authenticationForm textarea.form-control {
     padding: 10px 15px;
     height: auto;
     margin-bottom: 15px;
@@ -533,7 +592,7 @@ footer {
 
 /* ============ FONT AWESOME SOCIAL ICONS =========== */
 
-#LogInModal .social-line {
+.authenticationForm .social-line {
     margin: 10px 0;
     display: flex;
     flex: row nowrap;
@@ -541,7 +600,7 @@ footer {
     align-items: center;
 }
 
-#LogInModal .social-line a {
+.authenticationForm .social-line a {
     font-size: 18px;
     height: 40px;
     width: 40px;

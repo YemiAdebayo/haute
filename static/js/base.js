@@ -43,7 +43,6 @@ $(document).ready(function() {
 
 
     // This function asynchronously modifies the DOM after a successful login.
-
     async function updateLoginTemplate() {
 
         return await $.ajax({
@@ -63,7 +62,6 @@ $(document).ready(function() {
     };
 
     const initializeAjaxLogin = () => {
-
         // let csrftokenFromDOM = document.querySelector("input[name='csrfmiddlewaretoken']").value;
         // console.log(csrftokenFromDOM);
 
@@ -111,7 +109,7 @@ $(document).ready(function() {
             .done(function(data, textStatus) {
 
                 //Get success message and other data
-                const {
+                let {
                     message,
                 } = data;
 
@@ -127,11 +125,22 @@ $(document).ready(function() {
                 });
 
             })
-            .fail(function(jqXHR, textStatus, errorThrown) {
+            .fail(function(data, textStatus, errorThrown) {
 
                 //Log error and error stattus code in the console.
-                // console.log(errorThrown, textStatus);
-                $ajaxLoginErrorDiv.fadeIn(1500);
+                const {
+                    status
+                } = data;
+
+                if (parseInt(status) === 401) {
+                    $ajaxLoginErrorDiv.fadeIn(1500);
+                };
+
+                if (parseInt(status) === 408) {
+                    $(".error-span").text(`Your request timed out. Please try later!`);
+                    $ajaxLoginErrorDiv.fadeIn(1500);
+                };
+
                 $ajaxLoginSubmitBtn.prop("disabled", false).text(
                     `Sign In`
                 );
@@ -159,8 +168,8 @@ $(document).ready(function() {
     const logoutWithAjax = () => {
 
         //Get the logout url provided as html dataset on ajaxLogoutLink
-        let ajaxLogoutLink = document.querySelector("#ajaxLogoutLink");
-        let ajaxLogoutUrl = ajaxLogoutLink.dataset.ajaxlogouturl;
+        let ajaxLogoutLink = document.querySelector("#ajaxLogoutLink"),
+            ajaxLogoutUrl = ajaxLogoutLink.dataset.ajaxlogouturl;
 
         $.ajax({
                 type: 'GET',
@@ -175,17 +184,11 @@ $(document).ready(function() {
                     status
                 } = data;
 
-                console.log(textStatus);
-
-                //Update the modal to show login success message
-                // $ajaxLoginForm.replaceWith(message);
-
-                //Update the login status div
-                // updateLoginTemplate();
-
                 updateLoginTemplate()
                     .then(res => {
                         initializeAjaxLogin();
+                        initializeShowSignUpModal();
+                        initializeShowLoginpModal();
                     });
 
             })
@@ -197,7 +200,7 @@ $(document).ready(function() {
                     status
                 } = data;
 
-                console.log(textStatus);
+                console.log(textStatus, status);
 
             })
             .always(function(data, textStatus) {
@@ -206,7 +209,43 @@ $(document).ready(function() {
             });
     };
 
+    const initializeShowSignUpModal = () => {
+        let showSignUpModalBtn = document.querySelector("#showSignUpModalBtn");
+
+        if (showSignUpModalBtn) {
+            showSignUpModalBtn.addEventListener("click", function(e) {
+
+                // prevent button from clicking.
+                e.preventDefault();
+
+                console.log("Yea, button prevented from clicking!");
+
+                $(".modal-content.for-login").fadeTo("fast", 0).fadeOut(15);
+                $(".modal-content.for-signup").fadeIn(250).fadeTo("slow", 1);
+            });
+        };
+    };
+
+    const initializeShowLoginpModal = () => {
+        let showLoginModalBtn = document.querySelector("#showLoginModalBtn");
+
+        if (showLoginModalBtn) {
+            showLoginModalBtn.addEventListener("click", function(e) {
+
+                // prevent button from clicking.
+                e.preventDefault();
+
+                console.log("Yea, button prevented from clicking!");
+
+                $(".modal-content.for-signup").fadeTo("fast", 0).fadeOut(15);
+                $(".modal-content.for-login").fadeIn(250).fadeTo("slow", 1);
+            });
+        };
+    };
+
     initializeAjaxLogout();
     initializeAjaxLogin();
+    initializeShowSignUpModal();
+    initializeShowLoginpModal();
 
 });
