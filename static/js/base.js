@@ -41,6 +41,33 @@ $(document).ready(function() {
     //     }
     // });
 
+    //Sign up with Ajax main functio
+
+    const initializeAjaxSignUp = () => {
+
+        let ajaxSignUpSubmitBtn = document.querySelector("#ajaxSignUpSubmitBtn");
+
+        //Check that the form is in the DOM
+        if (ajaxSignUpSubmitBtn) {
+
+            ajaxSignUpSubmitBtn.addEventListener("click", function(e) {
+                //Prevent form from being submitted
+                e.preventDefault();
+                signupWithAjax();
+            })
+        };
+    };
+
+    const signupWithAjax = () => {
+
+        //Get the signup url provided as html dataset on ajaxLoginForm
+        let ajaxSignupUrl = $("#ajaxSignUpForm").data("ajaxsignupurl");
+
+        // serialize the form data 
+        let $serializedData = $("#ajaxSignUpForm").serialize();
+        console.log($serializedData);
+    };
+
 
     // This function asynchronously modifies the DOM after a successful login.
     async function updateLoginTemplate() {
@@ -62,8 +89,6 @@ $(document).ready(function() {
     };
 
     const initializeAjaxLogin = () => {
-        // let csrftokenFromDOM = document.querySelector("input[name='csrfmiddlewaretoken']").value;
-        // console.log(csrftokenFromDOM);
 
         let ajaxLoginForm = document.querySelector("#ajaxLoginForm");
         if (ajaxLoginForm) {
@@ -247,5 +272,6 @@ $(document).ready(function() {
     initializeAjaxLogin();
     initializeShowSignUpModal();
     initializeShowLoginpModal();
+    initializeAjaxSignUp();
 
 });

@@ -107,3 +107,7 @@ def ajax_logout(request):
             print('Hard to tell if Request is Ajax!')
     else:
         return render(request, 'home')
+
+
+def ajax_sign_up(request):
+    pass

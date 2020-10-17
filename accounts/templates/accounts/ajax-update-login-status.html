@@ -239,7 +239,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{% url 'sign-up' %}" method="POST" id="ajaxSignUpForm" data-ajaxloginurl="{% url 'login-with-ajax' %}" novalidate>
+                <form action="{% url 'sign-up' %}" method="POST" id="ajaxSignUpForm" data-ajaxsignupurl="{% url 'signup-with-ajax' %}" novalidate>
                     {% csrf_token %}
                     <!-- Form Title -->
                     <div class="form-heading text-center">
@@ -299,7 +299,7 @@
                             <span class="text-danger py-0 my-0 ajax-field-validation-error-message">
                                 Phone number field is required!
                             </span>
-                            <input type="text" name="email" id="ajaxSignUpEmail" class="error-handler" placeholder="Phone number" required />
+                            <input type="text" name="email" id="ajaxSignUpPhoneNumber" class="error-handler" placeholder="Phone number" required />
                         </div>
                     </div>
                     <div class="row">
