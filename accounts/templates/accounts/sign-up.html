@@ -1,1 +1,100 @@
-Sign up page works!
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block extrametatags %}
+<!-- Primary Meta Tags -->
+<title>Get Competent, Trustworthy Private Tutors Near You | Brilliant Nigeria</title>
+<meta name="title" content="Get Competent, Trustworthy Private Tutors Near You | Brilliant Nigeria">
+<meta name="description"
+    content="We provide access to the widest selection of qualified, highly experienced and trustworthy private tutors across Nigeria. Find a tutor close to you!">
+<meta name="keywords"
+    content="Home Tutor, Private Teacher, Home Teacher, Lesson Teacher, Private Teacher in Lekki,
+Private Teacher in PortHarcourt, Private Teacher in Abuja, Lesson Teacher in Nigeria, Private Maths Teacher,
+Private IELTS Teacher, Private TOEFL Teacher, ICAN, IGCSE Tutor, WAEC Tutor, Science Tutor, Cambridge Checkpoint Tutor">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.brilliant.ng/accounts/sign-up">
+<meta property="og:title" content="Get Competent, Trustworthy Private Tutors Near You | Brilliant Nigeria">
+<meta property="og:description"
+    content="We provide access to the widest selection of qualified, highly experienced and trustworthy private tutors across Nigeria. Find a tutor close to you!">
+<meta property="og:image" content="https://brilliant.ng/static/img/homepage-facebook.jpg">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://www.brilliant.ng/accounts/sign-up">
+<meta property="twitter:title" content="Get Competent, Trustworthy Private Tutors Near You | Brilliant Nigeria">
+<meta property="twitter:description" content="We provide access to the widest selection of qualified, 
+ highly experienced and trustworthy private tutors across Nigeria. Find a tutor close to you!">
+<meta property="twitter:image" content="https://brilliant.ng/static/img/homepage-facebook.jpg">
+{% endblock %}
+
+{% block extrahead %}
+<link rel="canonical" href="https://www.brilliant.ng/accounts/sign-up" />
+<link rel="stylesheet" href="{% static 'css/sign-up.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="col-12 py-3 px-1 px-md-2">
+    <form id="client-form" action="{% url 'sign-up' %}" method="POST"
+        class="col-md-7 d-flex mx-auto mt-0 my-2 flex-column justify-content-center  py-4" novalidate>
+        <h1 class="text-center text-white py-4 font-roman">Let's Create Your Account</h1>
+        {% csrf_token %}
+        <fieldset class="mx-0 px-0">
+            <div class="form-row">
+                <div class="form-group col-md-6 mb-0 col-lg-6">
+                    {{ form.first_name|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-6 mb-0 col-lg-6">
+                    {{ form.last_name|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6 mb-0 col-lg-6">
+                    {{ form.email|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-6 mb-0 col-lg-6">
+                    {{ form.phone_number|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6 mb-0 col-lg-6">
+                    {{ form.password|as_crispy_field }}
+                    <small>
+                        <ul style="padding-left: 12px; color: #fff; font-size: .8rem; line-height: 180%;">
+                            <li>Password can't be too similar to your personal information.</li>
+                            <li>Password must at least 8 characters long</li>
+                            <li>Password can't be too common, e.g ABC123</li>
+                            <li>Password must alphanumeric</li>
+                        </ul>
+                    </small>
+                </div>
+                <div class="form-group col-md-6 mb-0 col-lg-6">
+                    {{ form.password2|as_crispy_field }}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success rounded-lg btn-block col-md-6 ml-auto my-2">
+                Create Account
+            </button>
+        </fieldset>
+        <p class="py-2 my-0">Already have an account or forgot your password?</p>
+        <div class="row px-3">
+            <div class="col-md-6 px-1 my-1">
+                <a href="{% url 'sign-in' %}" class="btn btn-outline-light mx-auto rounded-lg col-md-12 mx-0">
+                    Login Here
+                </a>
+            </div>
+            <div class="col-md-6 px-1 my-1">
+                <a href="{% url 'password-reset' %}" class="btn btn-outline-light  mx-auto rounded-lg col-12 mx-0">
+                    Reset Password
+                </a>
+            </div>
+        </div>
+    </form>
+</section>
+{% endblock %}
+
+{% block extrascripts %}
+<script type="module" src="{% static 'js/sign-up.js' %}"></script>
+{% endblock %}

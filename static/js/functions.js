@@ -1,6 +1,6 @@
 "use strict";
 
-var emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 export function isValidEmail(input) {
     return emailReg.test(input);
 }
@@ -11,8 +11,8 @@ export function isValidEmail(input) {
 // HTML data attribute of the textarea/textInput element. For instance, my text input element will look like this:
 // <input type='text' data-textinput='my_class_name' /input>
 export function textareaCounter(textareaClass, textMaxLength) {
-    $(textareaClass).each(function() {
-        $(this).bind('input propertychange', function() {
+    $(textareaClass).each(function () {
+        $(this).bind('input propertychange', function () {
 
             let targetInpuAreaClassName = "." + $(this).data('textinput'),
                 currentCounterValue = $(targetInpuAreaClassName),
@@ -35,8 +35,8 @@ export function textareaCounter(textareaClass, textMaxLength) {
 
 // This function strips all user generated texts of all Malicious characters and codes and return only texts and numbers
 export function userInputStripper(val) {
-    if (typeof(val) === "object") {
-        var objectEntries = Object.entries(val),
+    if (typeof (val) === "object") {
+        let objectEntries = Object.entries(val),
             newObject = {};
         for (const [obj_key, obj_value] of objectEntries) {
             newObject[obj_key] = userInputStripper(obj_value);
@@ -55,10 +55,10 @@ export function userInputStripper(val) {
 // NOTE: The function will only work with a jquery selecteted jquery_className
 export function allSelecBoxesFilled(jquery_className) {
     var passTest = [];
-    jquery_className.each(function() {
+    jquery_className.each(function () {
         if ($(this).children("option:selected").val() !== "" &&
             $(this).children("option:selected").val() !== "placeholder" &&
-            typeof($(this).children("option:selected").val()) !== undefined) {
+            typeof ($(this).children("option:selected").val()) !== undefined) {
             passTest.push("passed");
         } else {
             if (!($(this).next().hasClass("warning"))) {
@@ -89,7 +89,7 @@ export function returnFileSize(number) {
 
 
 // This function determines that user uploaded file is one of the acceptable types
-var fileTypes = [
+const fileTypes = [
     'image/jpeg',
     'image/png',
     "doc",
@@ -104,10 +104,10 @@ var fileTypes = [
 ]
 
 export function validFileType(file) {
-    for (var i = 0; i < fileTypes.length; i++) {
+    for (let i = 0; i < fileTypes.length; i++) {
         if (file === fileTypes[i]) {
             return true;
-        }
+        };
     }
 
     return false;
@@ -121,7 +121,7 @@ export function isValidPhoneNumber(input) {
 // This function tests if input value="" and returns an error 
 export function writeInputErrorMessage(param) {
     if (!(param.prev().hasClass("warning"))) {
-        if ($.trim(param.val()) == "" || typeof($.trim(param.val())) == undefined) {
+        if ($.trim(param.val()) == "" || typeof ($.trim(param.val())) == undefined) {
             // param.after($("<span class='warning'>This field cannot be left empty</span> ").css("display", "inline-block"));
             param.prev().fadeIn(1000);
             param.prev().addClass("warning");

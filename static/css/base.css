@@ -6,7 +6,6 @@
 
 *::before,
 *::after {
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -348,12 +347,6 @@ footer {
     margin: 120px auto;
 }
 
-
-/* .authenticationForm button.close {
-    color: #f55a4e;
-    outline: none;
-} */
-
 .close {
     color: #3C4857;
     opacity: 0.9;
@@ -392,7 +385,6 @@ footer {
 }
 
 .authenticationForm .floating-label {
-    -webkit-transform: translateY(-18px);
     transform: translateY(-18px);
     position: absolute
 }
@@ -411,15 +403,14 @@ footer {
 .authenticationForm.modal input[type=text],
 .authenticationForm.modal textarea,
 .authenticationForm.modal input[type=password],
+.authenticationForm.modal input[type=tel],
 .authenticationForm.modal input[type=number] {
     position: relative;
     z-index: 2;
     margin-bottom: 15px;
     width: 100%;
     display: block;
-    border: 1px solid #DDD;
-    /* border: .5px solid #007bff; */
-    border-radius: 4px;
+    border: .5px solid #DDD;
     padding: 12px;
     will-change: background-position;
     transition: all .3s cubic-bezier(.64, .09, .08, 1);
@@ -428,7 +419,6 @@ footer {
     background-repeat: no-repeat;
     color: #3C4857;
     font-size: 13px;
-    /* background-color: #E6F8FF; */
     border-radius: 6px;
 }
 
@@ -438,6 +428,8 @@ footer {
 .authenticationForm input[type=text]:focus,
 .authenticationForm textarea.input-active,
 .authenticationForm textarea:focus,
+.authenticationForm.modal input[type=tel].input-active,
+.authenticationForm.modal input[type=tel]:focus,
 .authenticationForm input[type=password].input-active,
 .authenticationForm input[type=password]:focus,
 .authenticationForm input[type=number].input-active,
@@ -454,6 +446,8 @@ footer {
 .authenticationForm.modal input[type=text]:focus:after,
 .authenticationForm.modal textarea.input-active,
 .authenticationForm.modal textarea:focus:after,
+.authenticationForm.modal input[type=tel].input-active,
+.authenticationForm.modal input[type=tel]:focus:active,
 .authenticationForm.modal input[type=password].input-active,
 .authenticationForm.modal input[type=password]:focus:after,
 .authenticationForm.modal input[type=number].input-active,
@@ -474,15 +468,6 @@ footer {
     background-repeat: no-repeat;
     color: #000;
     font-size: 14px;
-}
-
-.authenticationForm input[type=email]::-webkit-input-placeholder,
-.authenticationForm input[type=text]::-webkit-input-placeholder,
-.authenticationForm textarea::-webkit-input-placeholder,
-.authenticationForm input[type=password]::-webkit-input-placeholder,
-.authenticationForm input[type=number]::-webkit-input-placeholder {
-    transition: all .2s cubic-bezier(.64, .09, .08, 1);
-    color: #3C4857;
 }
 
 .authenticationForm input[type=radio]:after,
@@ -525,14 +510,8 @@ footer {
     height: 20px;
     border: 1px solid #D5F3FF;
     border-radius: 3px;
-    display: -webkit-inline-flex;
-    display: -ms-inline-flexbox;
     display: inline-flex;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
     align-items: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
     justify-content: center;
     opacity: 0;
     transition: opacity .3s cubic-bezier(.64, .09, .08, 1);

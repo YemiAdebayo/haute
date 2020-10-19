@@ -5,15 +5,15 @@ import {
     removeInputErrorMessage
 } from "../js/functions.js";
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     //Check if login fields are empty and show error message on field blur or focus
-    $(".error-handler").each(function() {
-        $(this).blur(function() {
+    $(".error-handler").each(function () {
+        $(this).blur(function () {
             var $this = $(this);
             writeInputErrorMessage($this);
         })
-        $(this).focus(function() {
+        $(this).focus(function () {
             var $this = $(this);
             removeInputErrorMessage($this);
         })
@@ -50,7 +50,7 @@ $(document).ready(function() {
         //Check that the form is in the DOM
         if (ajaxSignUpSubmitBtn) {
 
-            ajaxSignUpSubmitBtn.addEventListener("click", function(e) {
+            ajaxSignUpSubmitBtn.addEventListener("click", function (e) {
                 //Prevent form from being submitted
                 e.preventDefault();
                 signupWithAjax();
@@ -66,6 +66,68 @@ $(document).ready(function() {
         // serialize the form data 
         let $serializedData = $("#ajaxSignUpForm").serialize();
         console.log($serializedData);
+
+        $.ajax({
+                type: 'POST',
+                url: ajaxSignupUrl,
+                mode: 'same-origin',
+                data: $serializedData,
+            })
+            .done(function (data, textStatus, jqXHR) {
+
+                //Get success message and other data
+                // let {
+                //     message,
+                // } = data;
+
+                // //Update the modal to show login success message
+                // $("#ajaxLoginForm").replaceWith(message);
+
+
+                // $('#LogInModal').on('hide.bs.modal', function () {
+                //     updateLoginTemplate()
+                //         .then(res => {
+                //             initializeAjaxLogout();
+                //         });
+                // });
+                console.log(data);
+                console.log(textStatus);
+                console.log(jqXHR["responseJSON"]);
+
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+
+                // //Log error and error stattus code in the console.
+                // const {
+                //     status
+                // } = data;
+
+                // if (parseInt(status) === 401) {
+                //     $ajaxLoginErrorDiv.fadeIn(1500);
+                // };
+
+                let errorJSON = jqXHR["responseJSON"];
+                for (let [key, value] of Object.entries(errorJSON)) {
+                    console.log(key, value);
+                };
+
+                // if (parseInt(status) === 408) {
+                //     $(".error-span").text(`Your request timed out. Please try later!`);
+                //     $ajaxLoginErrorDiv.fadeIn(1500);
+                // };
+
+                // $ajaxLoginSubmitBtn.prop("disabled", false).text(
+                //     `Sign In`
+                // );
+
+                console.log(textStatus);
+                console.log(errorThrown);
+            })
+            .always(function (jqXHROrData, textStatus, jqXHROrErrorThrown) {
+
+                //Run other executions here
+
+            });
     };
 
 
@@ -77,13 +139,13 @@ $(document).ready(function() {
                 url: ajaxUpdateLoginStatusUrl,
                 data: ''
             })
-            .done(function(response) {
+            .done(function (response) {
                 $ajaxLoginStatus.html(response);
             })
-            .fail(function(jqXHR, textStatus, errorThrown) {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $ajaxLoginStatus.html(errorThrown);
             })
-            .always(function() {
+            .always(function () {
                 console.log("Login template updated!");
             });
     };
@@ -92,7 +154,7 @@ $(document).ready(function() {
 
         let ajaxLoginForm = document.querySelector("#ajaxLoginForm");
         if (ajaxLoginForm) {
-            ajaxLoginForm.addEventListener("submit", function(e) {
+            ajaxLoginForm.addEventListener("submit", function (e) {
 
                 // prevent form  from submitting synchronously
                 e.preventDefault();
@@ -131,7 +193,7 @@ $(document).ready(function() {
                 mode: 'same-origin',
                 data: $serializedData,
             })
-            .done(function(data, textStatus) {
+            .done(function (data, textStatus) {
 
                 //Get success message and other data
                 let {
@@ -142,7 +204,7 @@ $(document).ready(function() {
                 $("#ajaxLoginForm").replaceWith(message);
 
 
-                $('#LogInModal').on('hide.bs.modal', function() {
+                $('#LogInModal').on('hide.bs.modal', function () {
                     updateLoginTemplate()
                         .then(res => {
                             initializeAjaxLogout();
@@ -150,7 +212,7 @@ $(document).ready(function() {
                 });
 
             })
-            .fail(function(data, textStatus, errorThrown) {
+            .fail(function (data, textStatus, errorThrown) {
 
                 //Log error and error stattus code in the console.
                 const {
@@ -170,7 +232,7 @@ $(document).ready(function() {
                     `Sign In`
                 );
             })
-            .always(function(jqXHROrData, textStatus, jqXHROrErrorThrown) {
+            .always(function (jqXHROrData, textStatus, jqXHROrErrorThrown) {
 
                 //Run other executions here
 
@@ -182,7 +244,7 @@ $(document).ready(function() {
         let ajaxLogoutLink = document.querySelector("#ajaxLogoutLink");
         //Check that Ajax logout link is in the DOM on document ready
         if (ajaxLogoutLink) {
-            ajaxLogoutLink.addEventListener("click", function(e) {
+            ajaxLogoutLink.addEventListener("click", function (e) {
                 e.preventDefault();
                 logoutWithAjax();
             });
@@ -201,7 +263,7 @@ $(document).ready(function() {
                 url: ajaxLogoutUrl,
                 data: '',
             })
-            .done(function(data, textStatus) {
+            .done(function (data, textStatus) {
 
                 //Get success message and other data
                 const {
@@ -217,7 +279,7 @@ $(document).ready(function() {
                     });
 
             })
-            .fail(function(data, textStatus) {
+            .fail(function (data, textStatus) {
 
                 //Get success message and other data
                 const {
@@ -228,7 +290,7 @@ $(document).ready(function() {
                 console.log(textStatus, status);
 
             })
-            .always(function(data, textStatus) {
+            .always(function (data, textStatus) {
                 //Log final request status
                 // console.log(textStatus);
             });
@@ -238,7 +300,7 @@ $(document).ready(function() {
         let showSignUpModalBtn = document.querySelector("#showSignUpModalBtn");
 
         if (showSignUpModalBtn) {
-            showSignUpModalBtn.addEventListener("click", function(e) {
+            showSignUpModalBtn.addEventListener("click", function (e) {
 
                 // prevent button from clicking.
                 e.preventDefault();
@@ -255,7 +317,7 @@ $(document).ready(function() {
         let showLoginModalBtn = document.querySelector("#showLoginModalBtn");
 
         if (showLoginModalBtn) {
-            showLoginModalBtn.addEventListener("click", function(e) {
+            showLoginModalBtn.addEventListener("click", function (e) {
 
                 // prevent button from clicking.
                 e.preventDefault();

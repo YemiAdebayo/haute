@@ -15,6 +15,8 @@ from django.core.exceptions import RequestAborted
 from .forms import RegistrationForm
 
 User = get_user_model()
+
+
 class SignUpView(CreateView):
     form_class = RegistrationForm
     template_name = 'accounts/sign-up.html'
@@ -67,17 +69,18 @@ def ajax_login(request):
                     login(request, user)
                     data = {
                         'message': f'<hr><div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 240px;"><h5 class="p-2 mx-2 my-0 h5-font-style text-center" style="font-size: 3em;"><span class="px-2 text-success"><i class="fas fa-user-check"></i></span></h5><h5 class="p-2 m-1 h5-font-style text-center text-blue" style="font-size: .9em;">Welcome back <strong class="text-success">{user.first_name}</strong>! You have successfully logged in. Please close this window to continue browsing.</h5></div><div class="modal-footer"><button type="button" class="btn btn-secondary rounded-lg" data-dismiss="modal">Close</button></div>',
-                        'redirect-url': '/', 'status':200
-                       }
+                        'redirect-url': '/', 'status': 200
+                    }
                     return JsonResponse(data, status=200)
                 except RequestAborted:
                     data = {
                         'message': f'<hr><div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 240px;"><h5 class="p-2 mx-2 my-0 h5-font-style text-center" style="font-size: 3em;"><span class="px-2 text-success"><i class="fas fa-user-check"></i></span></h5><h5 class="p-2 m-1 h5-font-style text-center text-blue" style="font-size: .9em;">Request timeout! Try again in few minutes</h5></div><div class="modal-footer"><button type="button" class="btn btn-secondary rounded-lg" data-dismiss="modal">Close</button></div>',
-                        'redirect-url': '/', 'status':408
-                       }
+                        'redirect-url': '/', 'status': 408
+                    }
                     return JsonResponse(data, status=408)
             else:
-                data = {'message': 'Username or password is incorrect!', "status": 401}
+                data = {
+                    'message': 'Username or password is incorrect!', "status": 401}
                 return JsonResponse(data, status=401)
 
         else:
@@ -87,20 +90,22 @@ def ajax_login(request):
     else:
         return render(request, 'index.html')
 
+
 @ensure_csrf_cookie
 def ajax_update_login_status(request):
     return render(request, "accounts/ajax-update-login-status.html")
 
+
 def ajax_logout(request):
     if request.method == 'GET':
-        #Check if the request is ajax
+        # Check if the request is ajax
         if request.is_ajax():
             print('Request is Ajax!')
             logout(request)
             data = {
-                        'message': f'<hr><div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 240px;"><h5 class="p-2 mx-2 my-0 h5-font-style text-center" style="font-size: 3em;"><span class="px-2 text-success"><i class="fas fa-user-check"></i></span></h5><h5 class="p-2 m-1 h5-font-style text-center text-blue" style="font-size: .9em;">You have successfully logged out. Please close this window to continue browsing.</h5></div><div class="modal-footer"><button type="button" class="btn btn-secondary rounded-lg" data-dismiss="modal">Close</button></div>',
-                        'redirect-url': '/', "status": 200,
-                       }
+                'message': f'<hr><div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 240px;"><h5 class="p-2 mx-2 my-0 h5-font-style text-center" style="font-size: 3em;"><span class="px-2 text-success"><i class="fas fa-user-check"></i></span></h5><h5 class="p-2 m-1 h5-font-style text-center text-blue" style="font-size: .9em;">You have successfully logged out. Please close this window to continue browsing.</h5></div><div class="modal-footer"><button type="button" class="btn btn-secondary rounded-lg" data-dismiss="modal">Close</button></div>',
+                'redirect-url': '/', "status": 200,
+            }
             return JsonResponse(data, status=200)
 
         else:
@@ -111,3 +116,40 @@ def ajax_logout(request):
 
 def ajax_sign_up(request):
     pass
+
+
+class AjaxSignUpView(CreateView):
+    form_class = RegistrationForm
+    template_name = 'accounts/sign-up.html'
+    success_url = 'accounts/sign-up-successful/'
+    # def get(self, request, *args, **kwargs):
+    #     self.object = None
+    #     ajax_create_partial = self.ajax_create_partial
+    #     ajax_list_partial = self.ajax_list_partial
+    #     context = super().get_context_data(**kwargs)
+    #     if not ajax_create_partial or not ajax_list_partial:
+    #         raise TemplateDoesNotExist("No ajax_create_partial or ajax_list_partial provided {}".format(self))
+    #     if request.is_ajax():
+    #         html_form = render_to_string(self.ajax_create_partial, context, request)
+    #         return JsonResponse({'html_form': html_form})
+    #     return super().get(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        # We make sure to call the parent's form_valid() method because
+        # it might do some processing (in the case of CreateView, it will
+        # call form.save() for example).
+        response = super().form_valid(form)
+        print(response)
+        data = {
+            'message': f'<hr><div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 240px;"><h5 class="p-2 mx-2 my-0 h5-font-style text-center" style="font-size: 3em;"><span class="px-2 text-success"><i class="fas fa-user-check"></i></span></h5><h5 class="p-2 m-1 h5-font-style text-center text-blue" style="font-size: .9em;">You have successfully logged out. Please close this window to continue browsing.</h5></div><div class="modal-footer"><button type="button" class="btn btn-secondary rounded-lg" data-dismiss="modal">Close</button></div>',
+            'redirect-url': '/', "status": 200,
+        }
+        if self.request.is_ajax():
+            return JsonResponse(data)
+        return super(AjaxSignUpView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        response = super().form_invalid(form)
+        if self.request.is_ajax():
+            return JsonResponse(form.errors, status=400)
+        return super(AjaxSignUpView, self).form_invalid(form)
