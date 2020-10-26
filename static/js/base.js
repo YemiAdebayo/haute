@@ -2,7 +2,10 @@ import {
     getCookie,
     csrfSafeMethod,
     writeInputErrorMessage,
-    removeInputErrorMessage
+    removeInputErrorMessage,
+    isValidEmail,
+    validateName,
+    isValidPhoneNumber
 } from "../js/functions.js";
 
 $(document).ready(function () {
@@ -26,11 +29,23 @@ $(document).ready(function () {
         $ajaxLoginForm = $("#ajaxLoginForm"),
         $ajaxLoginErrorDiv = $("#ajaxLoginErrorDiv"),
         // $ajaxLogoutLink = $("#ajaxLogoutLink"),
+        $ajaxSignUpSubmitBtn = $("#ajaxSignUpSubmitBtn"),
         $ajaxLoginSubmitBtn = $("#ajaxLoginSubmitBtn");
 
 
     //get csrf cookie and set the cookie in ajax
     const csrftoken = getCookie('csrftoken');
+
+    const togglePasswordVisibility = (btn, passwordSelector) => {
+        btn.addEventListener('click', function (e) {
+            // toggle the type attribute
+            const type = passwordSelector.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordSelector.setAttribute('type', type);
+            // toggle the eye slash icon
+            this.classList.toggle('fa-eye-slash');
+            this.classList.toggle('fa-eye');
+        });
+    };
 
     //Configure initial and default setup for Ajax request
     // $.ajaxSetup({
@@ -41,19 +56,61 @@ $(document).ready(function () {
     //     }
     // });
 
-    //Sign up with Ajax main functio
-
+    //Sign up with Ajax helper function
     const initializeAjaxSignUp = () => {
-
-        let ajaxSignUpSubmitBtn = document.querySelector("#ajaxSignUpSubmitBtn");
-
+        let ajaxSignUpForm = document.querySelector("#ajaxSignUpForm");
         //Check that the form is in the DOM
-        if (ajaxSignUpSubmitBtn) {
-
-            ajaxSignUpSubmitBtn.addEventListener("click", function (e) {
+        if (ajaxSignUpForm) {
+            ajaxSignUpForm.addEventListener("submit", function (e) {
                 //Prevent form from being submitted
                 e.preventDefault();
-                signupWithAjax();
+
+                //Check that all input fields have values provided and through exceptions if not
+                $("#ajaxSignUpForm .error-handler").each(function () {
+                    var $this = $(this);
+                    writeInputErrorMessage($this);
+                });
+
+                //Get all ajax login form fields that contain errors
+                let $allWarning = $("#ajaxSignUpForm").find(".warning");
+                let $firstName = $("#ajaxSignUpFirstName"),
+                    $lastName = $("#ajaxSignUpLastName"),
+                    $email = $("#ajaxSignUpEmail"),
+                    $phone = $("#ajaxSignUpPhoneNumber"),
+                    $password = $("#ajaxSignUpPasswordOne"),
+                    $passwordTwo = $("#ajaxSignUpPasswordTwo"),
+                    nameLenRgx = /^\w{2,50}$/;
+
+                if (parseInt($allWarning.length) > 0) {
+                    console.log(`${$allWarning.length} failed! Form cannot be submitted.`);
+                };
+
+                if (!nameLenRgx.test($.trim($firstName.val()))) {
+                    //Show error message
+                    validateName($firstName, "Name must be between 2 to 50 characters long!");
+                } else if (!nameLenRgx.test($.trim($lastName.val()))) {
+                    //Show error message
+                    validateName($lastName, "Name must be between 2 to 50 characters long!");
+                } else if (!isValidEmail($.trim($email.val()))) {
+                    //Show error message
+                    validateName($email, "Email is not valid!");
+                } else if (!isValidPhoneNumber($.trim($phone.val()))) {
+                    //Show error message
+                    validateName($phone, "Phone number is not valid!");
+                    console.log($phone.val());
+                } else if (parseInt($.trim($password.val()).length) < 8) {
+                    //Show error message
+                    validateName($password, "Password too short!");
+                } else {
+                    //Disable submit button to prevent multiple submit
+                    $ajaxSignUpSubmitBtn.prop("disabled", true).html(
+                        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Signing up...`
+                    );
+
+                    //Set passwordTwo value equals passwordOne
+                    $passwordTwo.val($.trim($password.val()));
+                    signupWithAjax();
+                };
             })
         };
     };
@@ -65,7 +122,6 @@ $(document).ready(function () {
 
         // serialize the form data 
         let $serializedData = $("#ajaxSignUpForm").serialize();
-        console.log($serializedData);
 
         $.ajax({
                 type: 'POST',
@@ -73,26 +129,22 @@ $(document).ready(function () {
                 mode: 'same-origin',
                 data: $serializedData,
             })
-            .done(function (data, textStatus, jqXHR) {
+            .done(function (responseData, textStatus, jqXHR) {
 
                 //Get success message and other data
-                // let {
-                //     message,
-                // } = data;
+                let {
+                    message,
+                } = responseData;
 
-                // //Update the modal to show login success message
-                // $("#ajaxLoginForm").replaceWith(message);
+                //Update the modal to show login success message
+                $("#ajaxSignUpForm").replaceWith(message);
 
-
-                // $('#LogInModal').on('hide.bs.modal', function () {
-                //     updateLoginTemplate()
-                //         .then(res => {
-                //             initializeAjaxLogout();
-                //         });
-                // });
-                console.log(data);
-                console.log(textStatus);
-                console.log(jqXHR["responseJSON"]);
+                $('#LogInModal').on('hidden.bs.modal', function () {
+                    updateLoginTemplate()
+                        .then(res => {
+                            initializeAjaxLogout();
+                        });
+                });
 
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
@@ -107,19 +159,34 @@ $(document).ready(function () {
                 // };
 
                 let errorJSON = jqXHR["responseJSON"];
-                for (let [key, value] of Object.entries(errorJSON)) {
-                    console.log(key, value);
-                };
+                const {
+                    email,
+                    password2
+                } = errorJSON;
 
                 // if (parseInt(status) === 408) {
                 //     $(".error-span").text(`Your request timed out. Please try later!`);
                 //     $ajaxLoginErrorDiv.fadeIn(1500);
                 // };
 
+                if (email && email[0] === "This email is taken!") {
+                    $("#ajaxSignUpErrorDiv").fadeIn(1500);
+                    $ajaxSignUpSubmitBtn.prop("disabled", false).text(
+                        `Sign Up`
+                    );
+                } else if (password2 && password2[0] === "This password is too common.") {
+                    $("#ajaxSignUpErrorDiv .error-span").text(`${password2[0]}`);
+                    $("#ajaxSignUpErrorDiv").fadeIn(1500);
+                    $ajaxSignUpSubmitBtn.prop("disabled", false).text(
+                        `Sign Up`
+                    );
+                };
+
                 // $ajaxLoginSubmitBtn.prop("disabled", false).text(
                 //     `Sign In`
                 // );
 
+                console.log(jqXHR);
                 console.log(textStatus);
                 console.log(errorThrown);
             })
@@ -159,21 +226,42 @@ $(document).ready(function () {
                 // prevent form  from submitting synchronously
                 e.preventDefault();
 
+                let $usernameField = $("#ajaxLoginUsername"),
+                    $passwordField = $("#ajaxLoginPassword");
+
+                let emailVal = document.querySelector("#ajaxLoginUsername").value,
+                    passwordVal = document.querySelector("#ajaxLoginPassword").value;
+
+
                 //Get all ajax login form fields that contain errors
                 let $allWarning = $("#ajaxLoginForm").find(".warning");
 
                 if (parseInt($allWarning.length) > 0) {
                     console.log(`${$allWarning.length} failed! Form cannot be submitted.`);
-                } else if ($allWarning.length === 0) {
+                } else if (!emailVal) {
+                    //Show error message
+                    writeInputErrorMessage($usernameField, "Enter a valid email!");
 
+                    //Enable submit button to allow retry
+                    $ajaxLoginSubmitBtn.prop("disabled", false).text(
+                        `Sign In`
+                    );
+                } else if (!passwordVal) {
+                    //Show error message
+                    writeInputErrorMessage($passwordField, "Enter a valid password!");
+
+                    //Enable submit button to allow retry
+                    $ajaxLoginSubmitBtn.prop("disabled", false).text(
+                        `Sign In`
+                    );
+                } else {
                     //Disable submit button to prevent multiple submit
                     $ajaxLoginSubmitBtn.prop("disabled", true).html(
-                        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Working...`
+                        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Signing in...`
                     );
                     //send serialized form as ajax request
                     loginWithAjax();
-                }
-
+                };
             })
         };
     };
@@ -301,12 +389,10 @@ $(document).ready(function () {
 
         if (showSignUpModalBtn) {
             showSignUpModalBtn.addEventListener("click", function (e) {
-
                 // prevent button from clicking.
                 e.preventDefault();
 
-                console.log("Yea, button prevented from clicking!");
-
+                //Fade in the new modal
                 $(".modal-content.for-login").fadeTo("fast", 0).fadeOut(15);
                 $(".modal-content.for-signup").fadeIn(250).fadeTo("slow", 1);
             });
@@ -330,10 +416,17 @@ $(document).ready(function () {
         };
     };
 
+    let ajaxLoginPasswordRevealBtn = document.querySelector("#ajaxLoginPasswordRevealBtn"),
+        ajaxLoginPassword = document.querySelector("#ajaxLoginPassword"),
+        ajaxSignUpPasswordRevealBtn = document.querySelector("#ajaxSignUpPasswordRevealBtn"),
+        ajaxSignUpPassword = document.querySelector("#ajaxSignUpPasswordOne");
+
     initializeAjaxLogout();
     initializeAjaxLogin();
     initializeShowSignUpModal();
     initializeShowLoginpModal();
     initializeAjaxSignUp();
+    togglePasswordVisibility(ajaxLoginPasswordRevealBtn, ajaxLoginPassword);
+    togglePasswordVisibility(ajaxSignUpPasswordRevealBtn, ajaxSignUpPassword);
 
 });

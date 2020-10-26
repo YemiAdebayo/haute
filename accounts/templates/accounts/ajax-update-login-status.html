@@ -29,8 +29,8 @@
         </span>
     </a>
     <div class="dropdown-menu bg-white" aria-labelledby="logoutDropdownBtn" id="logoutDropdownBtnDiv">
-        <div class="card card-profile border-0 py-3">
-            <div class="row justify-content-center py-0">
+        <div class="card card-profile border-0 py-3 col-12 mx-0">
+            <div class="row justify-content-center py-0 col-12">
                 <div class="py-0 my-0">
                     <div class="card-profile-image mx-auto">
                         <a href="#">
@@ -40,7 +40,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body pt-0">
+            <div class="card-body pt-0 col-12">
                 <div class="text-center">
                     <h3 class="pt-2 text-light-brown" style="font-size: 1em; font-weight: 300;">
                         {{ user.first_name }} {{ user.last_name}}
@@ -158,8 +158,8 @@
 </div>
 <div class="modal fade authenticationForm" id="LogInModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
     aria-hidden="true" data-ajaxupdatestatusloginurl="{% url 'update-login-status-with-ajax' %}">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content for-login" style="border-radius: 12px; border-color: #fff;">
+    <div class="modal-dialog modal-dialog-centered mx-auto col-md-4 row">
+        <div class="modal-content for-login col-12">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">×</span><span class="sr-only">Close</span>
@@ -171,95 +171,9 @@
                     {% csrf_token %}
                     <!-- Form Title -->
                     <div class="form-heading text-center">
-                        <h6 class="title">SIGN IN</h6>
+                        <h6 class="title py-0 my-0">SIGN IN</h6>
                         <!-- Social Line -->
-                        <div class="social-line">
-                            <a href="#" class="mx-2">
-                                <span class="p-0 text-primary">
-                                    <i class="fab fa-facebook-f"></i>
-                                </span>
-                            </a>
-                            <a href="#">
-                                <span class="p-0 text-primary">
-                                    <i class="fab fa-google"></i>
-                                </span>
-                            </a>
-                            <a href="#" class="mx-2">
-                                <span class="p-0 text-primary">
-                                    <i class="fab fa-twitter"></i>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="row py-0 my-0" id="ajaxLoginErrorDiv">
-                        <div class="col-md-12 text-center pb-2 pt-0 my-0">
-                            <span class="error-span text-danger text-center py-0 my-0" style="font-size: .75em;">User
-                                name or
-                                password is incorrect!</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <span class="text-danger py-0 my-0 ajax-field-validation-error-message">Email field is
-                                required!</span>
-                            <input type="text" name="username" id="ajaxLoginUsername" class="error-handler"
-                                placeholder="Email" required />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <span class="text-danger py-0 my-0 ajax-field-validation-error-message">Password field is
-                                required!</span>
-                            <input type="password" name="password" id="ajaxLoginPassword" class="error-handler"
-                                placeholder="Password" required />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <input type="checkbox" />
-                            <label>Remember Me</label>
-                        </div>
-                        <div class="col-md-5 col-md-offset-1">
-                            <label><a class="customLinkStyle" href="#" data-toggle="modal" data-target="#ForgotModal"
-                                    data-dismiss="modal">Forget Password?</a></label>
-                        </div>
-                    </div>
-                    <div class="row py-3">
-                        <div class="col-md-12 text-center">
-                            <button id="ajaxLoginSubmitBtn" type="submit"
-                                class="btn btn-md btn-custom-green p-font-style px-4 py3">
-                                Sign In
-                            </button>
-                        </div>
-                    </div>
-                    <div class="row pb-4 pt-2">
-                        <div class="col-md-12 text-center">
-                            <p>
-                                Don't have an account?
-                                <button class="customLinkStyle" id="showSignUpModalBtn">
-                                    Sign up here.
-                                </button>
-                            </p>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="modal-content for-signup" style="border-radius: 12px; border-color: #fff;">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span><span class="sr-only">Close</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="{% url 'sign-up' %}" method="POST" id="ajaxSignUpForm"
-                    data-ajaxsignupurl="{% url 'signup-with-ajax' %}" novalidate>
-                    {% csrf_token %}
-                    <!-- Form Title -->
-                    <div class="form-heading text-center">
-                        <h6 class="title">SIGN UP</h6>
-                        <!-- Social Line -->
-                        <div class="social-line">
+                        <div class="social-line py-0 my-1">
                             <a href="#" class="mx-2">
                                 <span class="p-0 text-primary">
                                     <i class="fab fa-facebook-f"></i>
@@ -287,13 +201,88 @@
                     <div class="row">
                         <div class="col-md-12">
                             <span class="text-danger py-0 my-0 ajax-field-validation-error-message">
+                                Email field is required!
+                            </span>
+                            <input type="text" name="username" id="ajaxLoginUsername" class="error-handler"
+                                placeholder="Email" required />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <i class="far fa-eye-slash password-reveal-icon" id="ajaxLoginPasswordRevealBtn"> </i>
+                            <span class="text-danger py-0 my-0 ajax-field-validation-error-message">
+                                Password field is required!
+                            </span>
+                            <input type="password" name="password" id="ajaxLoginPassword"
+                                class="error-handler ajax-login-password" placeholder="Password" required />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 text-left">
+                            <input type="checkbox" />
+                            <label>Remember Me</label>
+                        </div>
+                        <div class="col-6 text-right">
+                            <label>
+                                <a class="customLinkStyle" href="#" data-toggle="modal" data-target="#ForgotModal"
+                                    data-dismiss="modal">
+                                    Forget Password?
+                                </a>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row py-3">
+                        <div class="col-md-12 text-center py-0 my-0">
+                            <button id="ajaxLoginSubmitBtn" type="submit"
+                                class="btn btn-md btn-custom-green p-font-style px-4">
+                                Sign In
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row py-2">
+                        <div class="col-md-12 text-center py-0 my-0">
+                            <p class="py-0">
+                                Don't have an account?
+                                <button class="customLinkStyle" id="showSignUpModalBtn">
+                                    Sign up here.
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-content for-signup col-12">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'sign-up' %}" method="POST" id="ajaxSignUpForm"
+                    data-ajaxsignupurl="{% url 'signup-with-ajax' %}" novalidate>
+                    {% csrf_token %}
+                    <!-- Form Title -->
+                    <div class="form-heading text-center py-0">
+                        <h6 class="title py-0">SIGN UP</h6>
+                    </div>
+                    <div class="row py-0 my-0" id="ajaxSignUpErrorDiv">
+                        <div class="col-md-12 text-center pb-2 pt-0 my-0">
+                            <span class="error-span text-danger text-center py-0 my-0" style="font-size: .75em;">
+                                This email is taken!
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="text-danger py-0 my-0 ajax-field-validation-error-message">
                                 Names field is required!
                             </span>
                             <input type="text" name="first_name" id="ajaxSignUpFirstName" class="error-handler"
-                                placeholder="Surname Firstname" required />
+                                placeholder="First name" required />
                         </div>
                     </div>
-                    <!-- <div class="row">
+                    <div class="row">
                         <div class="col-md-12">
                             <span class="text-danger py-0 my-0 ajax-field-validation-error-message">
                                 Last name field is required!
@@ -301,7 +290,7 @@
                             <input type="text" name="last_name" id="ajaxSignUpLastName" class="error-handler"
                                 placeholder="Last name" required />
                         </div>
-                    </div> -->
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <span class="text-danger py-0 my-0 ajax-field-validation-error-message">
@@ -316,12 +305,13 @@
                             <span class="text-danger py-0 my-0 ajax-field-validation-error-message">
                                 Phone number field is required!
                             </span>
-                            <input type="tel" name="phone_number" id="ajaxSignUpPhoneNumber" class="error-handler"
+                            <input type="text" name="phone_number" id="ajaxSignUpPhoneNumber" class="error-handler"
                                 placeholder="Phone number" required />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
+                            <i class="far fa-eye-slash password-reveal-icon" id="ajaxSignUpPasswordRevealBtn"> </i>
                             <span class="text-danger py-0 my-0 ajax-field-validation-error-message">
                                 Password field is required!
                             </span>
@@ -329,24 +319,7 @@
                                 placeholder="Password" required />
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <span class="text-danger py-0 my-0 ajax-field-validation-error-message">
-                                Password field is required!
-                            </span>
-                            <input type="password" name="password2" id="ajaxSignUpPasswordTwo" class="error-handler"
-                                placeholder="Confirm password" required />
-                        </div>
-                    </div>
-                    <!-- <div class="row">
-                        <div class="col-md-12">
-                            <ul style="color: #3C4857; font-weight: 300; font-size: 12px;">
-                                <li>List one</li>
-                                <li>List two</li>
-                                <li>List three</li>
-                            </ul>
-                        </div>
-                    </div> -->
+                    <input type="hidden" name="password2" id="ajaxSignUpPasswordTwo" placeholder="Confirm password" />
                     <div class="row py-3">
                         <div class="col-md-12 text-center">
                             <button id="ajaxSignUpSubmitBtn" type="submit"

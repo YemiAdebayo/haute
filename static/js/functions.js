@@ -1,6 +1,6 @@
 "use strict";
 
-const emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+var emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 export function isValidEmail(input) {
     return emailReg.test(input);
 }
@@ -113,19 +113,38 @@ export function validFileType(file) {
     return false;
 }
 
-var phoneNumberRegEx = /^[0][8]\d{9}$|^[0][7]\d{9}$|^[0][9]\d{9}$|^[\+][2][3][4][7]\d{9}$|^[\+][2][3][4][8]\d{9}$|^[\+][2][3][4][9]\d{9}$|^[2][3][4][7]\d{9}$|^[2][3][4][8]\d{9}$|^[2][3][4][9]\d{9}$/;
+let phoneNumberRegEx = /^[0][8]\d{9}$|^[0][7]\d{9}$|^[0][9]\d{9}$|^[\+][2][3][4][7]\d{9}$|^[\+][2][3][4][8]\d{9}$|^[\+][2][3][4][9]\d{9}$|^[2][3][4][7]\d{9}$|^[2][3][4][8]\d{9}$|^[2][3][4][9]\d{9}$/;
 export function isValidPhoneNumber(input) {
     return phoneNumberRegEx.test(input);
 }
 
 // This function tests if input value="" and returns an error 
-export function writeInputErrorMessage(param) {
+export function writeInputErrorMessage(param, errorTxt) {
     if (!(param.prev().hasClass("warning"))) {
         if ($.trim(param.val()) == "" || typeof ($.trim(param.val())) == undefined) {
             // param.after($("<span class='warning'>This field cannot be left empty</span> ").css("display", "inline-block"));
-            param.prev().fadeIn(1000);
+            // param.prev().fadeIn(1000);
+            if (errorTxt) {
+                param.prev().text(errorTxt);
+                console.log(param.prev());
+            };
+            param.prev().fadeTo("slow", 1);
             param.prev().addClass("warning");
         }
+    }
+}
+
+//This functions validates first name and last name
+let nameLenRgx = /^\w{2,50}$/;
+export function validateName(param, errorTxt) {
+    if (!(param.prev().hasClass("warning"))) {
+        // param.after($("<span class='warning'>This field cannot be left empty</span> ").css("display", "inline-block"));
+        // param.prev().fadeIn(1000);
+        if (errorTxt) {
+            param.prev().text(errorTxt);
+        };
+        param.prev().fadeTo("slow", 1);
+        param.prev().addClass("warning");
     }
 }
 
@@ -133,7 +152,8 @@ export function writeInputErrorMessage(param) {
 export function removeInputErrorMessage(param) {
     if ((param.prev().hasClass("warning"))) {
         // param.next().remove();
-        param.prev().fadeOut(1000);
+        // param.prev().fadeOut(1000);
+        param.prev().fadeTo("slow", 0);
         param.prev().removeClass("warning");
     }
 }

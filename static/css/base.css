@@ -1,3 +1,8 @@
+/* html,
+body {
+    overflow-x: hidden;
+} */
+
 * {
     font-family: 'Roboto', sans-serif;
     font-display: swap;
@@ -126,14 +131,16 @@ button {
     min-width: 280px !important;
 }
 
-#ajaxLoginErrorDiv {
+#ajaxLoginErrorDiv,
+#ajaxSignUpErrorDiv {
     display: none;
 }
 
 .ajax-field-validation-error-message {
-    display: none;
+    /* display: none; */
+    opacity: 0;
     font-size: .75em;
-    min-height: 50px;
+    height: 50px;
 }
 
 
@@ -171,14 +178,14 @@ button {
 
 #logoutDropdownBtnDiv {
     position: absolute !important;
-    left: -6em !important;
+    left: -6.15em !important;
     top: 2.95em !important;
-    width: 250px;
+    width: 240px;
     border-radius: 8px;
     border: none !important;
     /* box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px; */
-    /* box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px; */
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
 }
 
 #logoutDropdownBtnDiv::before {
@@ -342,9 +349,9 @@ footer {
     border: none;
 }
 
-.authenticationForm .modal-dialog {
-    width: 360px;
-    margin: 120px auto;
+.authenticationForm .modal-content {
+    border-radius: 12px !important;
+    border-color: #fff !important;
 }
 
 .close {
@@ -407,11 +414,11 @@ footer {
 .authenticationForm.modal input[type=number] {
     position: relative;
     z-index: 2;
-    margin-bottom: 15px;
+    margin-bottom: 4px;
     width: 100%;
     display: block;
     border: .5px solid #DDD;
-    padding: 12px;
+    padding: 15px;
     will-change: background-position;
     transition: all .3s cubic-bezier(.64, .09, .08, 1);
     background-position: -1920px 0;
@@ -437,7 +444,7 @@ footer {
     background-position: 0 0;
     box-shadow: none;
     outline: 0;
-    border: 1px solid #f55a4e;
+    border: .5px solid #f55a4e;
 }
 
 .authenticationForm.modal input[type=email].input-active,
@@ -516,6 +523,15 @@ footer {
     opacity: 0;
     transition: opacity .3s cubic-bezier(.64, .09, .08, 1);
     will-change: opacity
+}
+
+.authenticationForm .password-reveal-icon {
+    position: absolute;
+    z-index: 3;
+    right: 1.4em;
+    top: 2.7em;
+    color: #3C4857;
+    cursor: pointer;
 }
 
 .authenticationForm input[type=checkbox]:checked:after {

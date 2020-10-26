@@ -139,13 +139,24 @@ class AjaxSignUpView(CreateView):
         # it might do some processing (in the case of CreateView, it will
         # call form.save() for example).
         response = super().form_valid(form)
-        print(response)
+
+        # ----Login the new user------
+        username = self.request.POST['email']
+        password = self.request.POST['password']
+        user = authenticate(self.request, username=username, password=password)
+
+        if user is not None:
+            login(self.request, user)
+
+        # --------Login ends here---------
+
         data = {
-            'message': f'<hr><div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 240px;"><h5 class="p-2 mx-2 my-0 h5-font-style text-center" style="font-size: 3em;"><span class="px-2 text-success"><i class="fas fa-user-check"></i></span></h5><h5 class="p-2 m-1 h5-font-style text-center text-blue" style="font-size: .9em;">You have successfully logged out. Please close this window to continue browsing.</h5></div><div class="modal-footer"><button type="button" class="btn btn-secondary rounded-lg" data-dismiss="modal">Close</button></div>',
-            'redirect-url': '/', "status": 200,
+            'message': f'<hr><div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 240px;"><h5 class="p-2 mx-2 my-0 h5-font-style text-center" style="font-size: 3em;"><span class="px-2 text-success"><i class="fas fa-user-check"></i></span></h5><h5 class="p-2 m-1 h5-font-style text-center text-blue" style="font-size: .9em;">Thanks for signing up <strong class="text-success">{user.first_name}</strong>! You have been logged in. Please close this window to continue browsing.</h5></div><div class="modal-footer"><button type="button" class="btn btn-secondary rounded-lg" data-dismiss="modal">Close</button></div>',
+            'redirect-url': '/', 'status': 200
         }
         if self.request.is_ajax():
-            return JsonResponse(data)
+
+            return JsonResponse(data, status=200)
         return super(AjaxSignUpView, self).form_valid(form)
 
     def form_invalid(self, form):
