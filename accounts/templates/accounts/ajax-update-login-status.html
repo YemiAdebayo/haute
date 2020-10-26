@@ -22,8 +22,8 @@
 </a>
 {% if user.is_authenticated %}
 <div id="logoutDropdownWrapper">
-    <a class="nav-link active" href="services.html" id="logoutDropdownBtn" data-toggle="dropdown" aria-haspopup="true"
-        aria-expanded="false">
+    <a class="nav-link active" href="{% url 'sign-out' %}" id="logoutDropdownBtn" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
         <span class="px-2 text-success">
             <i class="fas fa-user-check"></i>
         </span>
@@ -279,7 +279,7 @@
                                 Names field is required!
                             </span>
                             <input type="text" name="first_name" id="ajaxSignUpFirstName" class="error-handler"
-                                placeholder="First name" required />
+                                placeholder="First name" maxlength="50" required />
                         </div>
                     </div>
                     <div class="row">
@@ -288,7 +288,7 @@
                                 Last name field is required!
                             </span>
                             <input type="text" name="last_name" id="ajaxSignUpLastName" class="error-handler"
-                                placeholder="Last name" required />
+                                placeholder="Last name" maxlength="50" required />
                         </div>
                     </div>
                     <div class="row">
