@@ -8,7 +8,6 @@ from django.views.generic import TemplateView
 from .views import (SignUpView, ajax_update_login_status,
                     sign_up_successful_view, ajax_login,
                     ajax_logout,
-                    ajax_sign_up,
                     AjaxSignUpView
                     )
 

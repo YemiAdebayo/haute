@@ -22,4 +22,5 @@ urlpatterns = [
     path('', HomeListView.as_view(), name='home'),
     # path('products/', include('products.urls')),
     path('accounts/', include('accounts.urls')),
+    path('social-accounts/', include('allauth.urls')), 
 ]

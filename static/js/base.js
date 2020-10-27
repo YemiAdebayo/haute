@@ -8,15 +8,15 @@ import {
     isValidPhoneNumber
 } from "../js/functions.js";
 
-$(document).ready(function () {
+$(document).ready(function() {
 
     //Check if login and sign up fields are empty and show error message on field blur or focus
-    $(".error-handler").each(function () {
-        $(this).blur(function () {
+    $(".error-handler").each(function() {
+        $(this).blur(function() {
             var $this = $(this);
             writeInputErrorMessage($this);
         })
-        $(this).focus(function () {
+        $(this).focus(function() {
             var $this = $(this);
             removeInputErrorMessage($this);
         })
@@ -28,17 +28,16 @@ $(document).ready(function () {
         $ajaxLoginStatus = $("#ajaxLoginStatus"),
         $ajaxLoginForm = $("#ajaxLoginForm"),
         $ajaxLoginErrorDiv = $("#ajaxLoginErrorDiv"),
-        // $ajaxLogoutLink = $("#ajaxLogoutLink"),
         $ajaxSignUpSubmitBtn = $("#ajaxSignUpSubmitBtn"),
         $ajaxLoginSubmitBtn = $("#ajaxLoginSubmitBtn");
 
-    const toggleSignUpPasswordVisibility = () => {
+    const togglePasswordVisibility = (btnID, passwordSelectorID) => {
         //Get the toggle button and password field
-        let btn = document.querySelector("#ajaxSignUpPasswordRevealBtn"),
-            passwordSelector = document.querySelector("#ajaxSignUpPasswordOne");
+        let btn = document.querySelector(btnID),
+            passwordSelector = document.querySelector(passwordSelectorID);
 
         //Attach event to the toggle button and make password visible on toggle
-        btn.addEventListener('click', function (e) {
+        btn.addEventListener('click', function(e) {
             // toggle the type attribute
             const type = passwordSelector.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordSelector.setAttribute('type', type);
@@ -48,20 +47,23 @@ $(document).ready(function () {
         });
     };
 
-    const toggleLoginPasswordVisibility = () => {
-        //Get the toggle button and password field
-        let btn = document.querySelector("#ajaxLoginPasswordRevealBtn"),
-            passwordSelector = document.querySelector("#ajaxLoginPassword");
+    // This function asynchronously modifies the DOM after a successful login.
+    async function updateLoginTemplate() {
 
-        //Attach event to the toggle button and make password visible on toggle
-        btn.addEventListener('click', function (e) {
-            // toggle the type attribute
-            const type = passwordSelector.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordSelector.setAttribute('type', type);
-            // toggle the eye slash icon
-            this.classList.toggle('fa-eye-slash');
-            this.classList.toggle('fa-eye');
-        });
+        return await $.ajax({
+                type: 'GET',
+                url: ajaxUpdateLoginStatusUrl,
+                data: ''
+            })
+            .done(function(response) {
+                $ajaxLoginStatus.html(response);
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                $ajaxLoginStatus.html(errorThrown);
+            })
+            .always(function() {
+                console.log("Login template updated!");
+            });
     };
 
     //Sign up with Ajax helper function
@@ -75,12 +77,12 @@ $(document).ready(function () {
 
         //Check that the form is in the DOM
         if (ajaxSignUpForm) {
-            ajaxSignUpForm.addEventListener("submit", function (e) {
+            ajaxSignUpForm.addEventListener("submit", function(e) {
                 //Prevent the sign up form from being submitted.
                 e.preventDefault();
 
                 //Check that all input fields have values provided and throw exceptions if not.
-                $("#ajaxSignUpForm .error-handler").each(function () {
+                $("#ajaxSignUpForm .error-handler").each(function() {
                     let $this = $(this);
                     writeInputErrorMessage($this);
                 });
@@ -147,7 +149,7 @@ $(document).ready(function () {
 
         //Configure initial and default setup for Ajax request
         $.ajaxSetup({
-            beforeSend: function (xhr, settings) {
+            beforeSend: function(xhr, settings) {
                 if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
                     xhr.setRequestHeader("X-CSRFToken", csrftoken);
                 }
@@ -164,7 +166,7 @@ $(document).ready(function () {
                 mode: 'same-origin',
                 data: $serializedData,
             })
-            .done(function (responseData, textStatus, jqXHR) {
+            .done(function(responseData, textStatus, jqXHR) {
 
                 //Get success message and other data
                 let {
@@ -174,7 +176,7 @@ $(document).ready(function () {
                 //Update the modal to show login success message
                 $("#ajaxSignUpForm").replaceWith(message);
 
-                $('#LogInModal').on('hidden.bs.modal', function () {
+                $('#LogInModal').on('hidden.bs.modal', function() {
                     updateLoginTemplate()
                         .then(res => {
                             initializeAjaxLogout();
@@ -182,27 +184,13 @@ $(document).ready(function () {
                 });
 
             })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-
-                // //Log error and error stattus code in the console.
-                // const {
-                //     status
-                // } = data;
-
-                // if (parseInt(status) === 401) {
-                //     $ajaxLoginErrorDiv.fadeIn(1500);
-                // };
+            .fail(function(jqXHR, textStatus, errorThrown) {
 
                 let errorJSON = jqXHR["responseJSON"];
                 const {
                     email,
                     password2
                 } = errorJSON;
-
-                // if (parseInt(status) === 408) {
-                //     $(".error-span").text(`Your request timed out. Please try later!`);
-                //     $ajaxLoginErrorDiv.fadeIn(1500);
-                // };
 
                 if (email && email[0] === "This email is taken!") {
                     $("#ajaxSignUpErrorDiv").fadeIn(1500);
@@ -217,38 +205,12 @@ $(document).ready(function () {
                     );
                 };
 
-                // $ajaxLoginSubmitBtn.prop("disabled", false).text(
-                //     `Sign In`
-                // );
-
                 console.log(jqXHR);
                 console.log(textStatus);
                 console.log(errorThrown);
             })
-            .always(function (jqXHROrData, textStatus, jqXHROrErrorThrown) {
-
+            .always(function(jqXHROrData, textStatus, jqXHROrErrorThrown) {
                 //Run other executions here
-
-            });
-    };
-
-
-    // This function asynchronously modifies the DOM after a successful login.
-    async function updateLoginTemplate() {
-
-        return await $.ajax({
-                type: 'GET',
-                url: ajaxUpdateLoginStatusUrl,
-                data: ''
-            })
-            .done(function (response) {
-                $ajaxLoginStatus.html(response);
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                $ajaxLoginStatus.html(errorThrown);
-            })
-            .always(function () {
-                console.log("Login template updated!");
             });
     };
 
@@ -256,7 +218,7 @@ $(document).ready(function () {
 
         let ajaxLoginForm = document.querySelector("#ajaxLoginForm");
         if (ajaxLoginForm) {
-            ajaxLoginForm.addEventListener("submit", function (e) {
+            ajaxLoginForm.addEventListener("submit", function(e) {
 
                 // prevent form  from submitting synchronously
                 e.preventDefault();
@@ -311,7 +273,7 @@ $(document).ready(function () {
 
         //Configure initial and default setup for Ajax request
         $.ajaxSetup({
-            beforeSend: function (xhr, settings) {
+            beforeSend: function(xhr, settings) {
                 if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
                     xhr.setRequestHeader("X-CSRFToken", csrftoken);
                 }
@@ -328,7 +290,7 @@ $(document).ready(function () {
                 mode: 'same-origin',
                 data: $serializedData,
             })
-            .done(function (data, textStatus, jqXHR) {
+            .done(function(data, textStatus, jqXHR) {
 
                 //Get success message and other data
                 let {
@@ -339,7 +301,7 @@ $(document).ready(function () {
                 $("#ajaxLoginForm").replaceWith(message);
 
 
-                $('#LogInModal').on('hide.bs.modal', function () {
+                $('#LogInModal').on('hide.bs.modal', function() {
                     updateLoginTemplate()
                         .then(res => {
                             initializeAjaxLogout();
@@ -347,7 +309,7 @@ $(document).ready(function () {
                 });
 
             })
-            .fail(function (data, textStatus, errorThrown) {
+            .fail(function(data, textStatus, errorThrown) {
 
                 //Log error and error stattus code in the console.
                 const {
@@ -367,7 +329,7 @@ $(document).ready(function () {
                     `Sign In`
                 );
             })
-            .always(function (jqXHROrData, textStatus, jqXHROrErrorThrown) {
+            .always(function(jqXHROrData, textStatus, jqXHROrErrorThrown) {
 
                 //Run other executions here
 
@@ -379,7 +341,7 @@ $(document).ready(function () {
         let ajaxLogoutLink = document.querySelector("#ajaxLogoutLink");
         //Check that Ajax logout link is in the DOM on document ready
         if (ajaxLogoutLink) {
-            ajaxLogoutLink.addEventListener("click", function (e) {
+            ajaxLogoutLink.addEventListener("click", function(e) {
                 e.preventDefault();
                 logoutWithAjax();
             });
@@ -398,7 +360,7 @@ $(document).ready(function () {
                 url: ajaxLogoutUrl,
                 data: '',
             })
-            .done(function (data, textStatus, jqXHR) {
+            .done(function(data, textStatus, jqXHR) {
 
                 updateLoginTemplate()
                     .then(res => {
@@ -406,17 +368,17 @@ $(document).ready(function () {
                         initializeShowSignUpModal();
                         initializeShowLoginpModal();
                         initializeAjaxSignUp();
-                        toggleLoginPasswordVisibility();
-                        toggleSignUpPasswordVisibility();
+                        togglePasswordVisibility("#ajaxLoginPasswordRevealBtn", "#ajaxLoginPassword");
+                        togglePasswordVisibility("#ajaxSignUpPasswordRevealBtn", "#ajaxSignUpPasswordOne");
                     });
 
             })
-            .fail(function (jqXHR, textStatus, errorThrown) {
+            .fail(function(jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR);
                 console.log(textStatus);
                 console.log(errorThrown);
             })
-            .always(function (data, textStatus) {
+            .always(function(data, textStatus) {
                 //Log final request status
                 // console.log(textStatus);
             });
@@ -426,7 +388,7 @@ $(document).ready(function () {
         let showSignUpModalBtn = document.querySelector("#showSignUpModalBtn");
 
         if (showSignUpModalBtn) {
-            showSignUpModalBtn.addEventListener("click", function (e) {
+            showSignUpModalBtn.addEventListener("click", function(e) {
                 // prevent button from clicking.
                 e.preventDefault();
 
@@ -441,7 +403,7 @@ $(document).ready(function () {
         let showLoginModalBtn = document.querySelector("#showLoginModalBtn");
 
         if (showLoginModalBtn) {
-            showLoginModalBtn.addEventListener("click", function (e) {
+            showLoginModalBtn.addEventListener("click", function(e) {
 
                 // prevent button from clicking.
                 e.preventDefault();
@@ -454,12 +416,13 @@ $(document).ready(function () {
         };
     };
 
+    //Call main and initializing functions here
     initializeAjaxLogout();
     initializeAjaxLogin();
     initializeShowSignUpModal();
     initializeShowLoginpModal();
     initializeAjaxSignUp();
-    toggleLoginPasswordVisibility();
-    toggleSignUpPasswordVisibility();
+    togglePasswordVisibility("#ajaxLoginPasswordRevealBtn", "#ajaxLoginPassword");
+    togglePasswordVisibility("#ajaxSignUpPasswordRevealBtn", "#ajaxSignUpPasswordOne");
 
 });
