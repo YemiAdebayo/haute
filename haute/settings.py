@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from decouple import config, Csv
+# from accounts.forms import RegistrationForm
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -171,8 +172,10 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
+    "allauth.account.auth_backends.AuthenticationBackend", #Django-allauth backend configuration
 )
+
+#------ Django-allauth specific configurations start here
 
 SOCIALACCOUNT_PROVIDERS = { 'google': 
                              { 'SCOPE': ['profile','email',],
@@ -186,13 +189,21 @@ SOCIALACCOUNT_PROVIDERS = { 'google':
                              }
                           }
 
-SITE_ID = 2
+# SITE_ID = 1
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+ACCOUNT_FORMS = {
+    'signup': 'accounts.forms.RegistrationForm',
+}
+
+# SIGNUP_FORM_CLASS = RegistrationForm
+
+#------ Django-allauth specific configurations end here
 
 
 if DEBUG:
