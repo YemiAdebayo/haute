@@ -28,11 +28,14 @@
     </a>
     <div class="dropdown-menu bg-white" aria-labelledby="logoutDropdownBtn" id="logoutDropdownBtnDiv">
         <div class="card card-profile border-0 py-3 col-12 mx-0">
-            <div class="row justify-content-center py-0 col-12">
-                <div class="py-0 my-0">
-                    <div class="card-profile-image mx-auto">
-                        <a href="#">
+            <div class="justify-content-center py-0 col-12">
+                <div class="py-0 my-0 mx-auto row">
+                    <div class="card-profile-image mx-auto col-12 row">
+                        <!-- <a href="#">
                             <img src="https://demos.creative-tim.com/argon-dashboard/assets/img/theme/team-4.jpg" class="rounded-circle" width="80px;">
+                        </a> -->
+                        <a href="#" class="mx-auto">
+                            <img src="{{ user.profile.profile_pic.url }}" class="rounded-circle" width="80px;" height="80px" alt="user profile picture">
                         </a>
                     </div>
                 </div>

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from decouple import config, Csv
+from django.conf import settings
 # from accounts.forms import RegistrationForm
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -154,7 +155,8 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media")
+
+
 
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'sign-in'
@@ -201,11 +203,26 @@ ACCOUNT_FORMS = {
     'signup': 'accounts.forms.RegistrationForm',
 }
 
-# SIGNUP_FORM_CLASS = RegistrationForm
-
 #------ Django-allauth specific configurations end here
 
+
+#-----Set Celery IP and port here------
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = TIME_ZONE
+
+#------ All conditional statements start here ------
 
 if DEBUG:
     import mimetypes
     mimetypes.add_type("application/javascript", ".js", True)
+
+if DEBUG:
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+else:
+    MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media")
+
+#----- All conditional statements end here ---

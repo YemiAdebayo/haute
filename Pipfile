@@ -27,6 +27,7 @@ urllib3 = "*"
 Django = "==3.1.2"
 Pillow = "*"
 autopep8 = "*"
+redis = "*"
 
 [requires]
 python_version = "3.8"

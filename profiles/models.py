@@ -29,6 +29,10 @@ class Profile(models.Model):
         blank=True,
         null=True
     )
+    profile_pic = models.ImageField(
+        default='user.png', 
+        upload_to='profile-pictures'
+    )
 
     USERNAME_FIELD = 'user'
 
