@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models.signals import post_save
 from django.conf import settings
+from .tasks import optimize_profile_picture
 
 
 class Profile(models.Model):
@@ -38,6 +39,11 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.user.email}'
+
+    
+    def save(self, *args, **kwargs):
+        super().save()
+        optimize_profile_picture.delay()
 
 
 def userprofile_receiver(sender, instance, created, *args, **kwargs):
