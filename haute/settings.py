@@ -28,7 +28,8 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+# ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+ALLOWED_HOSTS = ['localhost']
 
 # Application definition
 
@@ -39,16 +40,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites', 
+    'django.contrib.sites',
 
     # third party apps
     'crispy_forms',
-    'allauth', 
+    'allauth',
     'allauth.account',
     'allauth.socialaccount',
     # 'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
-    # 'allauth.socialaccount.providers.twitter', 
+    # 'allauth.socialaccount.providers.twitter',
 
     # project created apps
     'accounts',
@@ -157,7 +158,6 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
 MEDIA_URL = '/media/'
 
 
-
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'sign-in'
 LOGOUT_URL = 'sign-out'
@@ -174,24 +174,25 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend", #Django-allauth backend configuration
+    # Django-allauth backend configuration
+    "allauth.account.auth_backends.AuthenticationBackend",
 )
 
-#------ Django-allauth specific configurations start here
+# ------ Django-allauth specific configurations start here
 
-SOCIALACCOUNT_PROVIDERS = { 'google': 
-                             { 'SCOPE': ['profile','email',],
-                               'AUTH_PARAMS': { 'access_type': 'online' },
-                            #    'FIELDS': [
-                            #        'email',
-                            #        'name',
-                            #        'first_name',
-                            #        'last_name',
-                            #    ]
-                             }
-                          }
+SOCIALACCOUNT_PROVIDERS = {'google':
+                           {'SCOPE': ['profile', 'email', ],
+                            'AUTH_PARAMS': {'access_type': 'online'},
+                               #    'FIELDS': [
+                               #        'email',
+                               #        'name',
+                               #        'first_name',
+                               #        'last_name',
+                               #    ]
+                            }
+                           }
 
-# SITE_ID = 1
+# SITE_ID = 2
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
@@ -203,10 +204,10 @@ ACCOUNT_FORMS = {
     'signup': 'accounts.forms.RegistrationForm',
 }
 
-#------ Django-allauth specific configurations end here
+# ------ Django-allauth specific configurations end here
 
 
-#-----Set Celery IP and port here------
+# -----Set Celery IP and port here------
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
@@ -214,7 +215,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
 
-#------ All conditional statements start here ------
+# ------ All conditional statements start here ------
 
 if DEBUG:
     import mimetypes
@@ -225,4 +226,4 @@ if DEBUG:
 else:
     MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media")
 
-#----- All conditional statements end here ---
+# ----- All conditional statements end here ---
