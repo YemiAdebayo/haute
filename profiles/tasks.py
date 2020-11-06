@@ -1,5 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 import random
+from django.core import serializers
 from haute.celery import app
 from PIL import Image
 
@@ -11,6 +12,9 @@ from PIL import Image
 @app.task(name="optimize_profile")
 def optimize_profile_picture(self):
     # Open the profile image with the Image method from Pillow
+    # serialized_data = serializers.serialize('json', self)
+    # print(serialized_data)
+    # img = Image.open(data.path)
     img = Image.open(self.profile_pic.path)
 
     # Check that image is large and resize accordingly

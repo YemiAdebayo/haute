@@ -28,8 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-# ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 # Application definition
 
@@ -47,7 +46,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    # 'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.twitter',
 
@@ -159,7 +158,7 @@ MEDIA_URL = '/media/'
 
 
 LOGIN_REDIRECT_URL = 'home'
-LOGIN_URL = 'sign-in'
+LOGIN_URL = 'home'
 LOGOUT_URL = 'sign-out'
 LOGOUT_REDIRECT_URL = 'home'
 
@@ -189,16 +188,48 @@ SOCIALACCOUNT_PROVIDERS = {'google':
                                #        'first_name',
                                #        'last_name',
                                #    ]
+                            },
+                            # 'facebook':
+                            #    {'METHOD': 'oauth2',
+                            #     'SCOPE': ['email'],
+                            #     'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+                            #     'LOCALE_FUNC': lambda request: 'en_US',
+                            #     'VERSION': 'v2.4'
+                            #    },
+                            
+                            'facebook': {
+                                'METHOD': 'oauth2',
+                                'SDK_URL': '//connect.facebook.net/{locale}/sdk.js',
+                                'SCOPE': ['email', 'public_profile'],
+                                'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+                                'INIT_PARAMS': {'cookie': True},
+                                # 'FIELDS': [
+                                #     'id',
+                                #     'first_name',
+                                #     'last_name',
+                                #     'middle_name',
+                                #     'name',
+                                #     'name_format',
+                                #     'picture',
+                                #     'short_name'
+                                # ],
+                                'EXCHANGE_TOKEN': True,
+                                'LOCALE_FUNC': lambda request: 'en_US',
+                                'VERIFIED_EMAIL': False,
+                                'VERSION': 'v8.0',
                             }
-                           }
+                        }
 
-# SITE_ID = 2
+SITE_ID = config('SITE_ID', cast=int)
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300
+# SOCIALACCOUNT_AUTO_SIGNUP = True
 
 ACCOUNT_FORMS = {
     'signup': 'accounts.forms.RegistrationForm',
@@ -220,8 +251,6 @@ CELERY_TIMEZONE = TIME_ZONE
 if DEBUG:
     import mimetypes
     mimetypes.add_type("application/javascript", ".js", True)
-
-if DEBUG:
     MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 else:
     MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media")

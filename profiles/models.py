@@ -31,7 +31,7 @@ class Profile(models.Model):
         null=True
     )
     profile_pic = models.ImageField(
-        default='user.svg',
+        default='user.png',
         upload_to='profile-pictures'
     )
 
@@ -44,6 +44,7 @@ class Profile(models.Model):
         context = self
         super().save()
         optimize_profile_picture(context)
+        # optimize_profile_picture.delay(context)
 
 
 def userprofile_receiver(sender, instance, created, *args, **kwargs):
