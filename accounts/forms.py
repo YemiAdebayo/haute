@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib import auth
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
+from allauth.socialaccount.forms import SignupForm as AllauthSignUpForm
 
 User = get_user_model()
 
@@ -175,3 +176,13 @@ class RegistrationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class CustomAllauthSignUpForm(AllauthSignUpForm):
+    def validate_unique_email(self, value):
+        try:
+            return super(CustomAllauthSignUpForm, self).validate_unique_email(value)
+        except forms.ValidationError:
+            raise forms.ValidationError(
+                "An account with this email already exits!"
+            )

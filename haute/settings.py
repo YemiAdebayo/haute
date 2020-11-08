@@ -189,36 +189,28 @@ SOCIALACCOUNT_PROVIDERS = {'google':
                                #        'last_name',
                                #    ]
                             },
-                            # 'facebook':
-                            #    {'METHOD': 'oauth2',
-                            #     'SCOPE': ['email'],
-                            #     'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-                            #     'LOCALE_FUNC': lambda request: 'en_US',
-                            #     'VERSION': 'v2.4'
-                            #    },
-                            
-                            'facebook': {
-                                'METHOD': 'oauth2',
-                                'SDK_URL': '//connect.facebook.net/{locale}/sdk.js',
-                                'SCOPE': ['email', 'public_profile'],
-                                'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-                                'INIT_PARAMS': {'cookie': True},
-                                # 'FIELDS': [
-                                #     'id',
-                                #     'first_name',
-                                #     'last_name',
-                                #     'middle_name',
-                                #     'name',
-                                #     'name_format',
-                                #     'picture',
-                                #     'short_name'
-                                # ],
-                                'EXCHANGE_TOKEN': True,
-                                'LOCALE_FUNC': lambda request: 'en_US',
-                                'VERIFIED_EMAIL': False,
-                                'VERSION': 'v8.0',
-                            }
-                        }
+                           'facebook': {
+                               'METHOD': 'oauth2',
+                               'SDK_URL': '//connect.facebook.net/{locale}/sdk.js',
+                               'SCOPE': ['email', 'public_profile'],
+                               'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+                               'INIT_PARAMS': {'cookie': True},
+                               # 'FIELDS': [
+                               #     'id',
+                               #     'first_name',
+                               #     'last_name',
+                               #     'middle_name',
+                               #     'name',
+                               #     'name_format',
+                               #     'picture',
+                               #     'short_name'
+                               # ],
+                               'EXCHANGE_TOKEN': True,
+                               'LOCALE_FUNC': lambda request: 'en_US',
+                               'VERIFIED_EMAIL': False,
+                               'VERSION': 'v8.0',
+                           }
+                           }
 
 SITE_ID = config('SITE_ID', cast=int)
 
@@ -233,6 +225,10 @@ ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300
 
 ACCOUNT_FORMS = {
     'signup': 'accounts.forms.RegistrationForm',
+}
+
+SOCIALACCOUNT_FORMS = {
+    'signup': 'accounts.forms.CustomAllauthSignUpForm'
 }
 
 # ------ Django-allauth specific configurations end here
