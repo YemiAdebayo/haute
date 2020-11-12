@@ -1,0 +1,69 @@
+.first-section {
+    min-height: 80vh;
+    /* padding: 60px 0; */
+    /* background-image: url("../img/worm-s-eye-view-of-buildings-1632788.jpg"); */
+}
+
+.first-section .card {
+    border: none;
+    border-radius: 6px;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px
+}
+.first-section label {
+    display: block;
+}
+
+.first-section input {
+    box-shadow: none !important;
+    position: relative;
+    z-index: 2;
+    margin-bottom: 4px;
+    width: 100%;
+    display: block;
+    border: .5px solid #DDD;
+    padding: 15px;
+    will-change: background-position;
+    transition: all .3s cubic-bezier(.64, .09, .08, 1);
+    background-position: -1920px 0;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    color: #3C4857;
+    font-size: .95em;
+    border-radius: 6px;
+}
+
+.first-section input:focus,
+.first-section input:active
+ {
+    outline: 0;
+    border: .5px solid #f55a4e;
+}
+
+.first-section p,
+.first-section label,
+.first-section .errorlist
+{
+    font-size: .95em;
+    color: #3C4857;
+    font-weight: 300;
+    line-height: 140%;
+}
+
+.first-section .errorlist{
+    color: #dc3545;
+}
+
+.btn-outline-secondary{
+    transition: all .4s cubic-bezier(.64, .09, .08, 1);
+    border-radius: 6px;
+}
+.btn-outline-secondary:hover{
+    background-color: #B3F3FF;
+    color: #3C4857;
+}
+
+label[for="id_remember"],
+#id_remember
+{
+    display: none;
+}

@@ -1,4 +1,9 @@
-{% extends "base.html" %} {% load static %} {% load crispy_forms_tags %} {% block extrametatags %} {% load i18n %}
+{% extends "base.html" %} 
+{% load static %} 
+{% load crispy_forms_tags %} 
+{% block extrametatags %} 
+{% load i18n %}
+{% load account socialaccount %}
 <!-- Primary Meta Tags -->
 <!-- <title>Find Maths, Science and English Tutors in Nigeria | Brilliant Nigeria</title>
 <meta name="title" content="Find Maths, Science and English Tutors in Nigeria | Brilliant Nigeria">
@@ -24,33 +29,52 @@ IELTS Tutor, TOEFL Tutor, ICAN Tutor, IGCSE Tutor, WAEC Tutor, Science Tutor, Ca
 <meta property="twitter:description"
     content="We provide access to the best Maths, Chemistry, Biology & English Tutors anywhere in Nigeria. Get a tutor now & pass IGCSE, NECO, WAEC, Checkpoint and SAT easily.">
 <meta property="twitter:image" content="https://brilliant.ng/static/img/homepage-facebook.jpg"> -->
-{% endblock %} {% block extrahead %}
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+{% endblock %} 
+{% block extrahead %}
 <!-- <link rel="canonical" href="https://brilliant.ng" /> -->
-<link rel="stylesheet" href="{% static 'css/socialaccount-signup.css' %}"> {% endblock %} {% block content %}
+<link rel="stylesheet" href="{% static 'css/socialaccount-login.css' %}"> {% endblock %} {% block content %}
 <section class="first-section text-dark bg-white m-0 py-4 px-2">
     <div class="card col-md-4 mx-auto col-12 bg-white">
         <div class="card-body">
-          <h5 class="card-title" style="color: #3C4857;">{% trans "Confirm Your Account" %}</h5>
+          <h5 class="card-title" style="color: #3C4857;">{% trans "Login Your Account" %}</h5>
+          <hr>
+
+          {% get_providers as socialaccount_providers %}
+          {% if socialaccount_providers %}
+
           <p class="card-text">
-            {% blocktrans with provider_name=account.get_provider.name site_name=site.name %}
-            You are about to use your {{provider_name}} account to login to
-            {{site_name}}. As a final step, please complete the following form:{% endblocktrans %}
+              {% blocktrans with site.name as site_name %}
+              Please sign in with one of your existing third party accounts. 
+              {% endblocktrans %}
           </p>
-          <form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
+          
+          <div class="socialaccount_ballot">
+              <ul class="socialaccount_providers">
+                  {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+              </ul>
+          </div>
+          {% include "socialaccount/snippets/login_extra.html" %}
+          {% else %}
+              <p>
+                  {% blocktrans %}If you have not created an account yet, then please
+                  <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
+              </p>
+          {% endif %}
+          <form class="login" id="signup_form" method="POST" action="{% url 'account_login' %}">
             {% csrf_token %}
             {{ form.as_p }}
             {% if redirect_field_value %}
             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
             {% endif %}
             <div class="row px-3">
-                <button type="submit" class="btn btn-outline-secondary ml-auto">{% trans "Confirm Account" %} &raquo;</button>
+                <button type="submit" class="btn btn-outline-secondary ml-auto">{% trans "Sign In" %} &raquo;</button>
             </div>
-        </form>
+          </form>
         </div>
       </div>
 </section>
 
-{% endblock %} {% block extrascripts %}
+{% endblock %} 
+{% block extrascripts %}
 <!-- <script type="module" src="{% static 'js/index.js' %}"></script> -->
 {% endblock %}

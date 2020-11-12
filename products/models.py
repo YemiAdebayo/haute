@@ -12,7 +12,7 @@ class Product(models.Model):
     name = models.CharField(max_length=150)
     slug = models.SlugField(max_length=150, default='someslug')
     description = models.TextField(max_length=500)
-    image = models.ImageField(upload_to='media/product_photo', blank=True)
+    image = models.ImageField(upload_to='products/',null=True, blank=True)
     manufacturer = models.CharField(max_length=300, blank=True)
     price = models.DecimalField(max_digits=20, decimal_places=2, default=00.00)
     featured = models.BooleanField(default=False)
@@ -21,3 +21,7 @@ class Product(models.Model):
     def __str__(self):
         return self.name
     objects = ProductManager
+
+
+class ProductExtraImages(models.Model):
+    pass

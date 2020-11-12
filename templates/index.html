@@ -24,10 +24,13 @@ IELTS Tutor, TOEFL Tutor, ICAN Tutor, IGCSE Tutor, WAEC Tutor, Science Tutor, Ca
 <meta property="twitter:description"
     content="We provide access to the best Maths, Chemistry, Biology & English Tutors anywhere in Nigeria. Get a tutor now & pass IGCSE, NECO, WAEC, Checkpoint and SAT easily.">
 <meta property="twitter:image" content="https://brilliant.ng/static/img/homepage-facebook.jpg"> -->
+
 {% endblock %} {% block extrahead %}
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
 <!-- <link rel="canonical" href="https://brilliant.ng" /> -->
-<link rel="stylesheet" href="{% static 'css/index.css' %}"> {% endblock %} {% block content %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block content %}
 <section class="first-section text-white bg-white m-0 py-4 px-2">
     <h1 class="text-dark">This works</h1>
 </section>
@@ -37,7 +40,8 @@ IELTS Tutor, TOEFL Tutor, ICAN Tutor, IGCSE Tutor, WAEC Tutor, Science Tutor, Ca
 <section class="third-section text-white">
 
 </section>
+{% endblock %} 
 
-{% endblock %} {% block extrascripts %}
+{% block extrascripts %}
 <script type="module" src="{% static 'js/index.js' %}"></script>
 {% endblock %}

@@ -195,16 +195,16 @@ SOCIALACCOUNT_PROVIDERS = {'google':
                                'SCOPE': ['email', 'public_profile'],
                                'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
                                'INIT_PARAMS': {'cookie': True},
-                               # 'FIELDS': [
-                               #     'id',
-                               #     'first_name',
-                               #     'last_name',
-                               #     'middle_name',
-                               #     'name',
-                               #     'name_format',
-                               #     'picture',
-                               #     'short_name'
-                               # ],
+                               'FIELDS': [
+                                   'id',
+                                   'first_name',
+                                   'last_name',
+                                   'middle_name',
+                                   'name',
+                                   'name_format',
+                                   'picture',
+                                   'short_name'
+                               ],
                                'EXCHANGE_TOKEN': True,
                                'LOCALE_FUNC': lambda request: 'en_US',
                                'VERIFIED_EMAIL': False,
@@ -228,7 +228,7 @@ ACCOUNT_FORMS = {
 }
 
 SOCIALACCOUNT_FORMS = {
-    'signup': 'accounts.forms.CustomAllauthSignUpForm'
+    'signup': 'accounts.forms.CustomAllauthSignUpForm',
 }
 
 # ------ Django-allauth specific configurations end here

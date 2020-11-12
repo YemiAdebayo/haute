@@ -179,10 +179,21 @@ class RegistrationForm(forms.ModelForm):
 
 
 class CustomAllauthSignUpForm(AllauthSignUpForm):
+
     def validate_unique_email(self, value):
+        social_account_types = ["Facebook", "Google"]
+        # Check the provider user is trying to login with. Then provide alternative means of authentication.
+        recommended_auth_account = ''
+        current_provider = self.sociallogin.account.get_provider().name
+        if current_provider == social_account_types[0]:
+            recommended_auth_account = social_account_types[1]
+        else:
+            recommended_auth_account = social_account_types[0]
+
+        print(current_provider)
         try:
             return super(CustomAllauthSignUpForm, self).validate_unique_email(value)
         except forms.ValidationError:
             raise forms.ValidationError(
-                "An account with this email already exits!"
+                "An account with this email already exits! Please try {} Authentication or login using email and password!".format(recommended_auth_account,)
             )

@@ -36,6 +36,7 @@ a {
 .p-font-style {
     font-size: .85em;
     font-weight: 300;
+    /* font: 14px/18px "Roboto",sans-serif; */
 }
 
 .h5-font-style {

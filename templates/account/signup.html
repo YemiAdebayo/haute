@@ -1,1 +1,59 @@
-{% include  'accounts/sign-up.html' %}
+{% extends "base.html" %} 
+{% load static %}
+{% load i18n %}
+{% block extrametatags %} 
+<!-- Primary Meta Tags -->
+<!-- <title>Find Maths, Science and English Tutors in Nigeria | Brilliant Nigeria</title>
+<meta name="title" content="Find Maths, Science and English Tutors in Nigeria | Brilliant Nigeria">
+<meta name="description"
+    content="We provide access to the best Maths, Chemistry, Biology & English Tutors anywhere in Nigeria. Get a tutor now & pass IGCSE, NECO, WAEC, Checkpoint and SAT easily.">
+<meta name="keywords"
+    content="Maths Tutor, Chemistry Tutor, Physics Tutor, Biology Tutor, Home Tutor,find a tutor near you, IELTS Tutor in Abuja, Home Teacher, Lesson Teacher, Private Teacher in Lekki, Home tutors in lekki,
+Private Teacher in PortHarcourt, Private Teacher in Abuja, Lesson Teacher in Nigeria, Private Maths Teacher,
+IELTS Tutor, TOEFL Tutor, ICAN Tutor, IGCSE Tutor, WAEC Tutor, Science Tutor, Cambridge Checkpoint Tutor, Phonic Tutors, Math tutor, maths tutor, english tutor"> -->
+
+<!-- Open Graph / Facebook -->
+<!-- <meta property="og:type" content="website">
+<meta property="og:url" content="https://brilliant.ng/">
+<meta property="og:title" content="Find Maths, Science and English Tutors in Nigeria | Brilliant Nigeria">
+<meta property="og:description"
+    content="We provide access to the best Maths, Chemistry, Biology & English Tutors anywhere in Nigeria. Get a tutor now & pass IGCSE, NECO, WAEC, Checkpoint and SAT easily.">
+<meta property="og:image" content="https://brilliant.ng/static/img/homepage-facebook.jpg"> -->
+
+<!-- Twitter -->
+<!-- <meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://brilliant.ng/">
+<meta property="twitter:title" content="Find Maths, Science and English Tutors in Nigeria | Brilliant Nigeria">
+<meta property="twitter:description"
+    content="We provide access to the best Maths, Chemistry, Biology & English Tutors anywhere in Nigeria. Get a tutor now & pass IGCSE, NECO, WAEC, Checkpoint and SAT easily.">
+<meta property="twitter:image" content="https://brilliant.ng/static/img/homepage-facebook.jpg"> -->
+{% endblock %} 
+{% block extrahead %}
+<!-- <link rel="canonical" href="https://brilliant.ng" /> -->
+<link rel="stylesheet" href="{% static 'css/socialaccount-login.css' %}"> {% endblock %} {% block content %}
+<section class="first-section text-dark bg-white m-0 py-4 px-2">
+    <div class="card col-md-4 mx-auto col-12 bg-white">
+        <div class="card-body">
+          <h5 class="card-title" style="color: #3C4857;">{% trans "Sign Up Here" %}</h5>
+          <hr>
+          <p class="card-text">
+            {% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}
+          </p>
+          <form class="login" id="signup_form" method="POST" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <div class="row px-3">
+                <button type="submit" class="btn btn-outline-secondary ml-auto">{% trans "Sign Up" %} &raquo;</button>
+            </div>
+          </form>
+        </div>
+      </div>
+</section>
+
+{% endblock %} 
+{% block extrascripts %}
+<!-- <script type="module" src="{% static 'js/index.js' %}"></script> -->
+{% endblock %}
