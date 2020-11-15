@@ -1,4 +1,5 @@
-from django.views import ListView, DetailView
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.shortcuts import render
 from .models import Product
 
