@@ -14,7 +14,7 @@ class ProductAdmin(admin.ModelAdmin):
 
     list_display = (
         'name',
-        'id',
+        # 'id',
         'price',
         'available',
         'timestamp',
@@ -33,7 +33,8 @@ class ProductAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': (
             'name',
-            'id',
+            # 'id',
+            'description',
         )}),
         ('Product info', {
          'fields': (
@@ -41,8 +42,8 @@ class ProductAdmin(admin.ModelAdmin):
              'slug',
              'manufacturer',
              'available',
+             'image',
          )}),
     )
-
 
 admin.site.register(Product, ProductAdmin)
