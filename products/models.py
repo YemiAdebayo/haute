@@ -1,8 +1,11 @@
 from django.db import models
+from django.db.models.signals import pre_save
 from django.urls import reverse
+from django.dispatch import receiver
+# from .models import Product
+from .utils import product_unique_slug_generator
 
 # Create your models here.
-
 
 class ProductQuerySet(models.query.QuerySet):
     def active(self):
@@ -29,9 +32,11 @@ class ProductManager(models.Manager):
 
 
 class Product(models.Model):
-    'This creates a Product model'
+    """
+        This model adds new product to the database. Admin access only
+    """
     name = models.CharField(max_length=150)
-    slug = models.SlugField(max_length=150, default='someslug')
+    slug = models.SlugField(max_length=150, blank=True)
     description = models.TextField(max_length=500)
     image = models.ImageField(upload_to='products/', null=True, blank=True)
     manufacturer = models.CharField(max_length=300, null=True, blank=True)
@@ -49,7 +54,11 @@ class Product(models.Model):
         return reverse('products:detail',kwargs={"slug" : self.slug})
 
 
-
 class ProductExtraImages(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='products/', null=True, blank=True)
+
+@receiver(pre_save, sender=Product)
+def product_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = product_unique_slug_generator(instance)

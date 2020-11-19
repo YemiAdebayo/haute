@@ -33,6 +33,11 @@ IELTS Tutor, TOEFL Tutor, ICAN Tutor, IGCSE Tutor, WAEC Tutor, Science Tutor, Ca
 {% block content %}
 <section class="first-section text-white bg-white m-0 py-4 px-2">
     <h1 class="text-dark">This works</h1>
+    {% for obj in object_list %}
+        <p class="text-dark">{{ obj.name }}</p>
+        <p class="text-dark">{{ obj.price }}</p>
+        <a href="{{ obj.get_absolute_url }}" class="btn btn-secondary">View Product</a>
+    {% endfor %}
 </section>
 <section class="second-section text-white">
 
