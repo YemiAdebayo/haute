@@ -1,7 +1,7 @@
 {% load socialaccount %}
 <div class="p-0 m-0 mx-3 search-box-wrapper position-relative d-none d-md-block">
-    <form class="input-group">
-        <input type="text" class="form-control border-right-0" placeholder="Search items here" aria-label="Search items here" aria-describedby="button-addon2">
+    <form class="input-group" method="GET" action="{% url 'search:list' %}">
+        <input type="text" class="form-control border-right-0" name="q" value="{{ request.GET.q }}" placeholder="Search items here" aria-label="Search items here" aria-describedby="button-addon2">
         <div class="input-group-append">
             <button class="btn btn-outline-secondary px-1 border-left-0" type="submit" id="button-addon2">
                 <span class="px-2 text-light-brown">

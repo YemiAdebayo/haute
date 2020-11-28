@@ -1,3 +1,4 @@
+import os
 import random
 import string
 from django.utils.text import slugify
@@ -24,3 +25,14 @@ def product_unique_slug_generator(instance, new_slug=None):
                 )
         return product_unique_slug_generator(instance, new_slug=new_slug)
     return slug
+
+def get_product_image_ext(imagepath):
+    base_name = os.path.basename(imagepath)
+    name, ext = os.path.splitext(base_name)
+    return ext
+
+def rename_product_image(instance, image_name):
+    slug_name = instance.slug
+    ext = get_product_image_ext(image_name)
+    new_img_name = f'{slug_name}{ext}'
+    return f'products/{new_img_name}'

@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'profiles',
     'home',
     'products',
+    'search',
+    'tags',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

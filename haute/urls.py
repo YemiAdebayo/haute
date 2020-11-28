@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomeListView.as_view(), name='home'),
     path('products/', include('products.urls', namespace="products")),
+    path('search/', include('search.urls', namespace="search")),
     path('accounts/', include('accounts.urls')),
     path('social-accounts/', include('allauth.urls')),
 ]
