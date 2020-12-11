@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'products',
     'search',
     'tags',
+    'carts',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
