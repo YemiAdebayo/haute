@@ -9,6 +9,12 @@ from products.models import Product, product_pre_save_receiver
 
 User = settings.AUTH_USER_MODEL
 
+class CartItem(models.Model):
+    product             = models.ForeignKey(Product, blank=False, null=False,on_delete=models.CASCADE)
+    quantity            = models.PositiveIntegerField(default=1)
+    date_modified       = models.DateTimeField(auto_now=True, verbose_name="Modified On")
+    date_added          = models.DateTimeField(auto_now_add=True, verbose_name="Added On")
+
 class CartManager(models.Manager):
     def new_or_get(self, request):
         cart_id = request.session.get("cart_id", None)
@@ -37,7 +43,8 @@ class CartManager(models.Manager):
 
 class Cart(models.Model):
     user        = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
-    products    = models.ManyToManyField(Product, blank=True)
+    items       = models.ManyToManyField(CartItem, blank=True)
+    # products    = models.ManyToManyField(Product, blank=True)
     subtotal    = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
     total       = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
     updated     = models.DateTimeField(auto_now=True)
@@ -48,17 +55,14 @@ class Cart(models.Model):
     def __str__(self):
         return str(self.id)
 
-class CartItem(models.Model):
-    product     = models.ForeignKey(Product, blank=False, null=False,on_delete=models.CASCADE)
-    quantity    = models.PositiveIntegerField(default=1)
 
-
-@receiver(m2m_changed, sender=Cart.products.through)
+@receiver(m2m_changed, sender=Cart.items.through)
 def m2m_changed_cart_receiver(sender, instance, action, *args, **kwargs):
-    products = instance.products.all()
+    items = instance.items.all()
     total = 0
-    for x in products:
-        total += x.price
+    for item in items:
+        item_total_price    =   item.product.price * item.quantity
+        total               +=  item_total_price
     if instance.subtotal != total:
         instance.subtotal = total
         instance.save()
@@ -66,6 +70,6 @@ def m2m_changed_cart_receiver(sender, instance, action, *args, **kwargs):
 @receiver(pre_save, sender=Cart)
 def cart_pre_save_receiver(sender, instance, *args, **kwargs):
     if instance.subtotal > 0:
-        instance.total = Decimal(instance.subtotal) * Decimal(1.08) # 8% tax
+        instance.total = Decimal(instance.subtotal) #* Decimal(1.08) # 8% tax
     else:
         instance.total = 0.00
