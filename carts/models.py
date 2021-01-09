@@ -12,8 +12,18 @@ User = settings.AUTH_USER_MODEL
 class CartItem(models.Model):
     product             = models.ForeignKey(Product, blank=False, null=False,on_delete=models.CASCADE)
     quantity            = models.PositiveIntegerField(default=1)
-    date_modified       = models.DateTimeField(auto_now=True, verbose_name="Modified On")
     date_added          = models.DateTimeField(auto_now_add=True, verbose_name="Added On")
+    date_modified       = models.DateTimeField(auto_now=True, verbose_name="Modified On")
+
+    def __str__(self):
+        return str(self.product)
+
+    @property
+    def price(self):
+        item_price  = self.product.price * self.quantity
+        return item_price
+
+    
 
 class CartManager(models.Manager):
     def new_or_get(self, request):
@@ -34,7 +44,9 @@ class CartManager(models.Manager):
         return cart_obj, new_obj
 
     def new(self, user=None):
-        #Replaces Cart.objects.create(*args, **kwargs) method so that we can perform extra logic
+        '''This method replaces Cart.objects.create(*args, **kwargs)
+            method so that we can perform extra logic
+        '''
         user_obj = None
         if user is not None:
             if user.is_authenticated():
@@ -44,25 +56,25 @@ class CartManager(models.Manager):
 class Cart(models.Model):
     user        = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     items       = models.ManyToManyField(CartItem, blank=True)
-    # products    = models.ManyToManyField(Product, blank=True)
     subtotal    = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
     total       = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
-    updated     = models.DateTimeField(auto_now=True)
     timestamp   = models.DateTimeField(auto_now_add=True)
 
     objects = CartManager()
 
     def __str__(self):
         return str(self.id)
+    
+    # def save(self, *args, **kwargs): 
+    #     # self.slug = slugify(self.title) 
+    #     # super(GeeksModel, self).save(*args, **kwargs) 
+    #     pass
 
 
 @receiver(m2m_changed, sender=Cart.items.through)
 def m2m_changed_cart_receiver(sender, instance, action, *args, **kwargs):
-    items = instance.items.all()
-    total = 0
-    for item in items:
-        item_total_price    =   item.product.price * item.quantity
-        total               +=  item_total_price
+    total = sum([item.price for item in instance.items.all()])
+
     if instance.subtotal != total:
         instance.subtotal = total
         instance.save()
